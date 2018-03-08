@@ -22,7 +22,7 @@ from flask_cors import CORS
 PORT = 13502
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=('https://wiki.archlinux.org', ))
 
 
 @app.route("/")
