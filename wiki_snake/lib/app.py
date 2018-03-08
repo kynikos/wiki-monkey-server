@@ -34,12 +34,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.path.join('sqlite:////', datadir,
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+from . import models, api
 
-def run():
-    from . import models, api
-
-    app.run(host="localhost",
-            port=13502,
-            ssl_context=('../auxiliary/dev-cert.pem',
-                         '../auxiliary/dev-key.pem'),
-            debug=True)
+app.run(host="localhost",
+        port=13502,
+        ssl_context=('../auxiliary/dev-cert.pem',
+                     '../auxiliary/dev-key.pem'),
+        debug=True)
