@@ -19,6 +19,11 @@
 from flask import jsonify
 from .app import app
 
+# TODO: Improve the API
+#       https://flask-restful.readthedocs.io/en/latest/quickstart.html
+#       https://flask-restplus.readthedocs.io/en/stable/parsing.html
+#       https://flask-marshmallow.readthedocs.io/en/latest/
+
 
 @app.route("/")
 def hello_world():

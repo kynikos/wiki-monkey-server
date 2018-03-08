@@ -27,6 +27,7 @@ app = Flask(__name__)
 # TODO: Allow setting the origins
 CORS(app, origins=('https://wiki.archlinux.org', ))
 
+# TODO: Allow setting the path
 datadir = xdg.BaseDirectory.save_data_path('wikimonkey')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.path.join('sqlite:////', datadir,
                                                      'db.sqlite')
@@ -37,8 +38,6 @@ db = SQLAlchemy(app)
 def run():
     from . import models, api
 
-    # TODO: Allow setting these parameters
-    #       https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https
     app.run(host="localhost",
             port=13502,
             ssl_context=('../auxiliary/dev-cert.pem',
