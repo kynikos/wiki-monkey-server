@@ -36,6 +36,8 @@ db = SQLAlchemy(app)
 
 from . import models, api
 
+# TODO: Allow setting these parameters
+#       https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https
 app.run(host="localhost",
         port=13502,
         ssl_context=('../auxiliary/dev-cert.pem',
