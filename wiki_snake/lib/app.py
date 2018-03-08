@@ -22,6 +22,7 @@ from flask_cors import CORS
 PORT = 13502
 
 app = Flask(__name__)
+# TODO: Allow setting the origins
 CORS(app, origins=('https://wiki.archlinux.org', ))
 
 
@@ -31,6 +32,8 @@ def hello_world():
 
 
 def run():
+    # TODO: Allow setting these parameters
+    #       https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https
     app.run(host="localhost",
             port=PORT,
             ssl_context=('../auxiliary/dev-cert.pem',
