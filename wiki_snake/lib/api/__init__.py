@@ -19,6 +19,11 @@
 from ..app import app
 from .talk import TalkAPI
 
+# TODO: Improve the API
+#       https://flask-restful.readthedocs.io/en/latest/quickstart.html
+#       https://flask-restplus.readthedocs.io/en/stable/parsing.html
+#       https://flask-marshmallow.readthedocs.io/en/latest/
+
 talk_view = TalkAPI.as_view('talk_api')
 app.add_url_rule('/talk/', defaults={'talk_id': None},
                  view_func=talk_view, methods=['GET'])
