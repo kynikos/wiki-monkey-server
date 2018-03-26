@@ -17,7 +17,6 @@
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
 from . import api, CORSResource
-from ..models.talk import Talk
 ma = api.ma
 
 
@@ -30,13 +29,9 @@ class OutSchema(api.Schema):
     ccc = ma.Str()
 
 
-inschema = InSchema()
-outschema = OutSchema()
-
-
 @api.route('/maintenance/')
 class MaintenanceAPI(CORSResource):
 
-    @api.marshal(inschema, outschema)
+    @api.marshal(InSchema(), OutSchema())
     def get(self, indata):
         return {'bbb': "Hello World", 'ccc': indata.aaa}

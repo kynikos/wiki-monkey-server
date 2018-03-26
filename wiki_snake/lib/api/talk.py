@@ -30,21 +30,9 @@ class OutSchema(api.Schema):
     ccc = ma.Str()
 
 
-inschema = InSchema()
-outschema = OutSchema()
-
-
 @api.route('/talk/')
 class TalksAPI(CORSResource):
 
-    @api.marshal(inschema, outschema)
+    @api.marshal(InSchema(), OutSchema())
     def post(self, indata):
-        return {'bbb': "Hello World", 'ccc': indata.aaa}
-
-
-@api.route('/talk/<int:talk_id>', defaults={'talk_id': None})
-class TalkAPI(CORSResource):
-
-    @api.marshal(inschema, outschema)
-    def post(self, indata, talk_id):
         return {'bbb': "Hello World", 'ccc': indata.aaa}
