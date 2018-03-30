@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from flask_rip import IMPLICIT, EXPLICIT, API
+from ..flask_rip import IMPLICIT, EXPLICIT, API  # from flask_rip import API  # TODO
 
 from ..app import app
 
