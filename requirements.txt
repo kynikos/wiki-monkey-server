@@ -1,0 +1,4 @@
+flask-restinpeace
+Flask-SQLAlchemy
+flask-cors
+pyxdg
