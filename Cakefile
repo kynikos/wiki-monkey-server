@@ -19,12 +19,12 @@ task('gencert', "generate the certificate to serve the app from localhost",
         run('openssl', 'req', '-new', '-key', 'dev-key.pem', '-out', 'dev.csr',
             {cwd: AUXDIR})
         run('openssl', 'x509', '-req', '-in', 'dev.csr', '-signkey',
-        'dev-key.pem', '-out', 'dev-cert.pem', {cwd: AUXDIR})
+            'dev-key.pem', '-out', 'dev-cert.pem', {cwd: AUXDIR})
         fs.unlinkSync(path.join(AUXDIR, 'dev.csr'))
 )
 
 
-task('servedb', "serve the database on localhost", (options) ->
+task('serve', "serve the database on localhost", (options) ->
     run('python3', '-m', 'main',
         '--port', 13502,
         '--origin', 'https://wiki.archlinux.org',
