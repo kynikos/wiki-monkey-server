@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
+# TODO: I will very soon need alembic too
 from flask_sqlalchemy import SQLAlchemy
 
 from ..app import cliargs, app

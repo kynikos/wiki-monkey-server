@@ -17,7 +17,7 @@
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
 from flask import make_response
-from ..flask_rip import API
+from ..flask_rip import API  # from flask_rip import API  # TODO
 
 from ..app import app
 
