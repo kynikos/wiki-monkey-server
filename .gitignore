@@ -1,4 +1,7 @@
 __pycache__
 auxiliary/dev-cert.pem
 auxiliary/dev-key.pem
+build/
+dist/
 venv/
+*.egg-info/
