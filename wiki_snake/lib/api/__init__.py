@@ -23,7 +23,7 @@ from ..app import app
 
 openapi_spec = APISpec(
     title='Wiki Monkey',
-    version='0.1.0',
+    version='0.1.0',  # TODO Extract the version from setup.py or something
     info=dict(
         description='Wiki Monkey server API'
     ),
