@@ -27,7 +27,8 @@ def serve(ctx, port=13502):
     run('cd {} && python3 -m main --port {} '
         '--origin https://wiki.archlinux.org '
         '--origin http://wiki.archlinux.org '
-        '--ssl-cert {} --ssl-key {} --db-path ./test-database.sqlite '
+        '--ssl-cert {} --ssl-key {} '
+        '--db-path ../../auxiliary/test-database.sqlite '
         '--debug'.format(SERVERDIR, port,
                          os.path.join('..', AUXDIR, 'dev-cert.pem'),
                          os.path.join('..', AUXDIR, 'dev-key.pem')),

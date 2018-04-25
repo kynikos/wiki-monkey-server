@@ -17,21 +17,18 @@
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
 from . import api
+from ..models import database as db
 ma = api.ma
 
 
-class InSchema(api.Schema):
-    aaa = ma.Str(required=True)
-
-
-class OutSchema(api.Schema):
-    bbb = ma.Str()
-    ccc = ma.Str()
+class sConfirm(api.Schema):
+    success = ma.Boolean()
 
 
 maintenance = api.create_resource('Maintenance')
 
 
-@maintenance.post(InSchema(), OutSchema())
-def init(indata):
-    return {'bbb': "Hello World", 'ccc': indata.aaa}
+@maintenance.post(None, sConfirm())
+def init_database(indata):
+    db.create_all()
+    return {'success': True}

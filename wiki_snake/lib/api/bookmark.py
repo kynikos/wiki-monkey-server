@@ -17,6 +17,7 @@
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
 from . import api
+from ..models import database as db
 from ..models.bookmark import Bookmark as mBookmark
 ma = api.ma
 
@@ -27,8 +28,8 @@ class CanonicalSpecialPageName(ma.String):
         return None if value is False else value
 
 
-class InSchema(api.Schema):
-    wgAction = ma.String()
+class sBookmark(api.Schema):
+    url = ma.String()
     wgArticleId = ma.Integer()
     wgPageName = ma.String()
     wgRelevantPageName = ma.String()
@@ -40,58 +41,47 @@ class InSchema(api.Schema):
     wgCurRevisionId = ma.Integer()
     wgDiffOldId = ma.Integer()
     wgDiffNewId = ma.Integer()
-    wgIsArticle = ma.Boolean()
-    wgIsProbablyEditable = ma.Boolean()
-    wgRelevantPageIsProbablyEditable = ma.Boolean()
-    wgPageContentLanguage = ma.String()
-    wgPageContentModel = ma.String()
-    wgCategories = numbers = ma.List(ma.String())
-
-
-class OutSchema(api.Schema):
     wgAction = ma.String()
-    wgArticleId = ma.Integer()
-    wgPageName = ma.String()
-    wgRelevantPageName = ma.String()
-    wgCanonicalSpecialPageName = CanonicalSpecialPageName()
-    wgCanonicalNamespace = ma.String()
-    wgNamespaceNumber = ma.Integer()
-    wgTitle = ma.String()
-    wgRevisionId = ma.Integer()
-    wgCurRevisionId = ma.Integer()
-    wgDiffOldId = ma.Integer()
-    wgDiffNewId = ma.Integer()
     wgIsArticle = ma.Boolean()
     wgIsProbablyEditable = ma.Boolean()
     wgRelevantPageIsProbablyEditable = ma.Boolean()
     wgPageContentLanguage = ma.String()
     wgPageContentModel = ma.String()
-    wgCategories = numbers = ma.List(ma.String())
+
+
+class sConfirm(api.Schema):
+    success = ma.Boolean()
 
 
 @api.resource()
 class Bookmark:
 
-    @api.put(InSchema(), OutSchema())
+    @api.get(None, sBookmark(many=True))
+    def get(self, indata):
+        return mBookmark.query.all()
+
+    @api.put(sBookmark(), sConfirm())
     def put(self, indata):
-        return {
-            'wgAction': indata.wgAction,
-            'wgArticleId': indata.wgArticleId,
-            'wgPageName': indata.wgPageName,
-            'wgRelevantPageName': indata.wgRelevantPageName,
-            'wgCanonicalSpecialPageName': indata.wgCanonicalSpecialPageName,
-            'wgCanonicalNamespace': indata.wgCanonicalNamespace,
-            'wgNamespaceNumber': indata.wgNamespaceNumber,
-            'wgTitle': indata.wgTitle,
-            'wgRevisionId': indata.wgRevisionId,
-            'wgCurRevisionId': indata.wgCurRevisionId,
-            'wgDiffOldId': indata.wgDiffOldId,
-            'wgDiffNewId': indata.wgDiffNewId,
-            'wgIsArticle': indata.wgIsArticle,
-            'wgIsProbablyEditable': indata.wgIsProbablyEditable,
-            'wgRelevantPageIsProbablyEditable':
-            indata.wgRelevantPageIsProbablyEditable,
-            'wgPageContentLanguage': indata.wgPageContentLanguage,
-            'wgPageContentModel': indata.wgPageContentModel,
-            'wgCategories': indata.wgCategories,
-        }
+        bookmark = mBookmark(
+            url=indata.url,
+            wgArticleId=indata.wgArticleId,
+            wgPageName=indata.wgPageName,
+            wgRelevantPageName=indata.wgRelevantPageName,
+            wgCanonicalSpecialPageName=indata.wgCanonicalSpecialPageName,
+            wgCanonicalNamespace=indata.wgCanonicalNamespace,
+            wgNamespaceNumber=indata.wgNamespaceNumber,
+            wgTitle=indata.wgTitle,
+            wgRevisionId=indata.wgRevisionId,
+            wgCurRevisionId=indata.wgCurRevisionId,
+            wgDiffOldId=indata.wgDiffOldId,
+            wgDiffNewId=indata.wgDiffNewId,
+            wgAction=indata.wgAction,
+            wgIsArticle=indata.wgIsArticle,
+            wgIsProbablyEditable=indata.wgIsProbablyEditable,
+            wgRelevantPageIsProbablyEditable=indata.wgRelevantPageIsProbablyEditable,
+            wgPageContentLanguage=indata.wgPageContentLanguage,
+            wgPageContentModel=indata.wgPageContentModel,
+        )
+        db.session.add(bookmark)
+        db.session.commit()
+        return {'success': True}
