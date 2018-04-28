@@ -17,8 +17,12 @@
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
 from . import api
-from ..models import init_database
+from ..models import database as db, init_database
 ma = api.ma
+
+
+class sInfo(api.Schema):
+    user_version = ma.Integer()
 
 
 class sConfirm(api.Schema):
@@ -26,6 +30,16 @@ class sConfirm(api.Schema):
 
 
 maintenance = api.create_resource('Maintenance')
+
+
+@maintenance.get(None, sInfo())
+def database_info(indata):
+    """
+    Read some database metadata.
+    """
+    return {
+        'user_version': db.engine.execute('PRAGMA user_version').fetchone()[0],
+    }
 
 
 @maintenance.post(None, sConfirm())
