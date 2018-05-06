@@ -39,8 +39,8 @@ class sBookmark(api.Schema):
     wgTitle = ma.String()
     wgRevisionId = ma.Integer()
     wgCurRevisionId = ma.Integer()
-    wgDiffOldId = ma.Integer()
-    wgDiffNewId = ma.Integer()
+    wgDiffOldId = ma.Integer(allow_none=True)
+    wgDiffNewId = ma.Integer(allow_none=True)
     wgAction = ma.String()
     wgIsArticle = ma.Boolean()
     wgIsProbablyEditable = ma.Boolean()
@@ -84,7 +84,7 @@ class Bookmark:
             wgAction=indata.wgAction,
             wgIsArticle=indata.wgIsArticle,
             wgIsProbablyEditable=indata.wgIsProbablyEditable,
-            wgRelevantPageIsProbablyEditable=indata.wgRelevantPageIsProbablyEditable,
+            wgRelevantPageIsProbablyEditable=indata.wgRelevantPageIsProbablyEditable,  # noqa
             wgPageContentLanguage=indata.wgPageContentLanguage,
             wgPageContentModel=indata.wgPageContentModel,
         )
