@@ -5,6 +5,7 @@ AUXDIR = './auxiliary/'
 SERVERDIR = './wiki_snake/'
 
 
+# TODO: Remind in documentation that the certificate must be stored in the browser
 @task
 def gencert(ctx):
     """
