@@ -72,8 +72,8 @@ class Bookmark:
         """
         return mBookmark.query.all()
 
-    @api.put(sBookmarkIn(), sConfirm())
-    def put(self, indata):
+    @api.post(sBookmarkIn(), sConfirm())
+    def post(self, indata):
         """
         Save a new bookmark.
         """
