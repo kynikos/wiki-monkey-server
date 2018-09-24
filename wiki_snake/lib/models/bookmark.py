@@ -23,7 +23,7 @@ from . import database as db
 
 class Bookmark(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String)
+    url = db.Column(db.String, unique=True)
     wgArticleId = db.Column(db.Integer)
     wgPageName = db.Column(db.String)
     wgRelevantPageName = db.Column(db.String)
