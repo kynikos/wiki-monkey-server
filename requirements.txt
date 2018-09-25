@@ -4,4 +4,5 @@ Flask-SQLAlchemy
 Flask-Migrate
 flask-cors
 flask-marshmallow
+marshmallow-sqlalchemy
 pyxdg
