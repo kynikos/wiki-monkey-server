@@ -18,15 +18,10 @@
 
 from flask_sqlalchemy import SQLAlchemy
 
-# 'database' is assigned in init() as a global variable to ease importing it
-# from the models' modules
-database = None
+from ..app import cliargs, app
 
+app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///' +
+                                         cliargs.db_path.lstrip('/'))
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-def init(app, db_path):
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path.lstrip('/')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-    # 'database' must be imported by the models' modules, so assign it globally
-    global database
-    database = SQLAlchemy(app)
+database = SQLAlchemy(app)

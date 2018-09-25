@@ -19,16 +19,26 @@
 from flask import Flask
 from flask_cors import CORS
 
+# 'cliargs' and 'app' are assigned in run() as global variables to ease
+# importing them from the subpackages without e.g. requiring to pass them as
+# arguments to init functions
+cliargs = None
+app = None
 
-def run(cliargs):
+
+def run(cliargs_):
+    # 'cliargs' must be imported by the subpackages, so assign it globally
+    global cliargs
+    cliargs = cliargs_
+
+    # 'api' must be imported by the subpackages, so assign it globally
+    global app
     app = Flask(__name__)
+
     CORS(app, origins=cliargs.origins or ['*'])
 
-    from . import models
-    models.init(app, cliargs.db_path)
-    # NOTE: It is necessary to *first* init the models and *then* the API
-    from . import api
-    api.init(app)
+    # 'models' must be imported *before* 'api'!!!
+    from . import models, api  # noqa
 
     app.run(host=cliargs.host,
             port=cliargs.port,

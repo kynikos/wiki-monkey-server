@@ -16,22 +16,26 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-# TODO: Ways to improve
-#       https://flask-restful.readthedocs.io/en/latest/
-#       https://flask-restplus.readthedocs.io/en/latest/
-#       https://flask-marshmallow.readthedocs.io/en/latest/
+from flask import make_response
+from ..flask_rip import API
+
+from ..app import app
+
+api = API(app, endpoint='/')
 
 
-def init(app):
-    from .maintenance import MaintenanceAPI
-    from .talk import TalkAPI
+# It would be equally effective to set a catch-all routing rule on the OPTIONS
+# method, but deriving the Resources from this class allows to override the
+# options handler if needed
+class CORSResource(api.Resource):
+    # An OPTIONS handler is needed to support CORS preflight requests
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Preflighted_requests
+    # NOTE: When testing it may look like this handler is actually not needed,
+    #       but that's only due to the caching below
+    def options(self):
+        # By default the response to a preflight request isn't cached, so set
+        # Access-Control-Max-Age explicitly
+        return make_response(("", 204, {'Access-Control-Max-Age': 86400}))
 
-    app.add_url_rule('/maintenance/<action>',
-                     view_func=MaintenanceAPI.as_view('maintenance'))
 
-    talk = TalkAPI.as_view('talk')
-    app.add_url_rule('/talk/', defaults={'talk_id': None},
-                     view_func=talk, methods=['GET'])
-    app.add_url_rule('/talk/', view_func=talk, methods=['POST'])
-    app.add_url_rule('/talk/<int:talk_id>', view_func=talk,
-                     methods=['GET', 'PUT', 'DELETE'])
+from . import maintenance, talk  # noqa

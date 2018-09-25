@@ -17,8 +17,8 @@
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
 import os.path
-import xdg.BaseDirectory
 import argparse
+import xdg.BaseDirectory
 
 # NOTE: WHY NOT MOVE 'api' AND 'models' NEXT TO THIS SCRIPT?
 # Due to werkzeug issue #461 this is the only configuration to get this

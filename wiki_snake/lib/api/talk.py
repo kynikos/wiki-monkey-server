@@ -16,11 +16,35 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from flask.views import MethodView
-from flask import jsonify
+from . import api, CORSResource
 from ..models.talk import Talk
+ma = api.ma
 
 
-class TalkAPI(MethodView):
-    def get(self, talk_id):
-        return jsonify({'foo': "Hello World"})
+class InSchema(api.Schema):
+    aaa = ma.Str()
+
+
+class OutSchema(api.Schema):
+    bbb = ma.Str()
+    ccc = ma.Str()
+
+
+inschema = InSchema()
+outschema = OutSchema()
+
+
+@api.route('/talk/')
+class TalksAPI(CORSResource):
+
+    @api.marshal(inschema, outschema)
+    def post(self, indata):
+        return {'bbb': "Hello World", 'ccc': indata.aaa}
+
+
+@api.route('/talk/<int:talk_id>', defaults={'talk_id': None})
+class TalkAPI(CORSResource):
+
+    @api.marshal(inschema, outschema)
+    def post(self, indata, talk_id):
+        return {'bbb': "Hello World", 'ccc': indata.aaa}
