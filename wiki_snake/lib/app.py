@@ -45,6 +45,7 @@ def run(cliargs_):
     # 'models' must be imported *before* 'api'!!!
     from . import models, api  # noqa
 
+    # TODO: Also test if it's a valid database
     if dbfile_just_created:
         models.init_database()
 
