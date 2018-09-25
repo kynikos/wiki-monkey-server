@@ -28,7 +28,7 @@ cliargs = None
 app = None
 
 
-def run(cliargs_):
+def _pre_run(cliargs_, cors):
     # 'cliargs' must be imported by the subpackages, so assign it globally
     global cliargs
     cliargs = cliargs_
@@ -37,14 +37,17 @@ def run(cliargs_):
     global app
     app = Flask(__name__)
 
-    CORS(app, origins=cliargs.origins or ['*'])
+    if cors:
+        CORS(app, origins=cliargs.origins or ['*'])
 
     # 'models' must be imported *before* 'api'!!!
     from . import models, api  # noqa
 
-    if cliargs.init_only:
-        models.init_migrations()
-        sys.exit(0)
+    return models, api
+
+
+def run(cliargs_):
+    models, api = _pre_run(cliargs_, True)
 
     models.init_database()
 
@@ -53,3 +56,14 @@ def run(cliargs_):
             ssl_context=(cliargs.ssl_cert, cliargs.ssl_key)
             if cliargs.ssl_cert and cliargs.ssl_key else 'adhoc',
             debug=cliargs.debug)
+
+
+def maintain(cliargs_):
+    models, api = _pre_run(cliargs_, False)
+
+    if cliargs.init_env:
+        models.init_migrations()
+    elif cliargs.migrate:
+        models.create_migration()
+    else:
+        raise ValueError("Unspecified maintenance command")

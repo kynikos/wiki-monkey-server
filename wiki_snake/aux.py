@@ -36,29 +36,12 @@ from lib import app
 argparser = argparse.ArgumentParser(description="Wiki Monkey database server.",
                                     add_help=True)
 
-argparser.add_argument('--host', metavar='HOST', action='store',
-                       default='localhost',
-                       help='the hostname to listen on '
-                       '(default: %(default)s)')
+argparser.add_argument('--init-env', action='store_true',
+                       help='initialize the development environment')
 
-argparser.add_argument('-p', '--port', metavar='NUMBER', action='store',
-                       required=True, type=int,
-                       help='the port number to listen on (required)')
-
-argparser.add_argument('--origin', metavar='HOST', action='append',
-                       dest='origins',
-                       help='an origin to allow requests from; if not '
-                       'provided, all origins will be allowed')
-
-argparser.add_argument('--ssl-cert', metavar='PATH', action='store',
-                       help='the path to the SSL certificate file; '
-                       'if not provided, an ad-hoc certificate will be '
-                       'created')
-
-argparser.add_argument('--ssl-key', metavar='PATH', action='store',
-                       help='the path to the SSL key file; '
-                       'if not provided, an ad-hoc certificate will be '
-                       'created')
+argparser.add_argument('--migrate', action='store_true',
+                       help='create an automatic database-migration revision '
+                       'script')
 
 datadir = xdg.BaseDirectory.save_data_path('wiki-snake')
 argparser.add_argument('--db-path', metavar='PATH', action='store',
@@ -66,8 +49,5 @@ argparser.add_argument('--db-path', metavar='PATH', action='store',
                        help='the path to the SQLite database file '
                        '(default: %(default)s)')
 
-argparser.add_argument('--debug', action='store_true',
-                       help='run the server in debug mode')
-
 if __name__ == "__main__":
-    app.run(argparser.parse_args())
+    app.maintain(argparser.parse_args())

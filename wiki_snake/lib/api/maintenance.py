@@ -19,12 +19,12 @@
 import flask_migrate as fm
 
 from . import api
-from ..models import database as db, init_database
+from ..models import database as db
 ma = api.ma
 
 
 class sInfo(api.Schema):
-    user_version = ma.Integer()
+    database_revision = ma.String()
 
 
 class sConfirm(api.Schema):
@@ -32,24 +32,6 @@ class sConfirm(api.Schema):
 
 
 maintenance = api.create_resource('Maintenance')
-
-
-@maintenance.post(None, sConfirm())
-def init_migration(indata):
-    """
-    Initializes database-migration support with Flask-Migrate and Alembic.
-    """
-    fm.init()
-    return {'success': True}
-
-
-@maintenance.post(None, sConfirm())
-def create_migration(indata):
-    """
-    Creates an automatic database-migration revision script.
-    """
-    fm.migrate()
-    return {'success': True}
 
 
 @maintenance.post(None, sConfirm())

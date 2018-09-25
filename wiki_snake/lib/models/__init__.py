@@ -18,7 +18,8 @@
 
 import os.path
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate, init as fm_init, upgrade as fm_upgrade
+from flask_migrate import (Migrate, init as fm_init, migrate as fm_migrate,
+                           upgrade as fm_upgrade)
 
 from ..app import cliargs, app
 
@@ -33,6 +34,11 @@ migrate = Migrate(app, database)
 def init_migrations():
     with app.app_context():
         fm_init()
+
+
+def create_migration():
+    with app.app_context():
+        fm_migrate()
 
 
 def init_database():
