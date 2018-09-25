@@ -16,26 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from flask import make_response
 from ..flask_rip import API  # from flask_rip import API  # TODO
 
 from ..app import app
 
-api = API(app, endpoint='/')
-
-
-# It would be equally effective to set a catch-all routing rule on the OPTIONS
-# method, but deriving the Resources from this class allows to override the
-# options handler if needed
-class CORSResource(api.Resource):
-    # An OPTIONS handler is needed to support CORS preflight requests
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Preflighted_requests
-    # NOTE: When testing it may look like this handler is actually not needed,
-    #       but that's only due to the caching below
-    def options(self):
-        # By default the response to a preflight request isn't cached, so set
-        # Access-Control-Max-Age explicitly
-        return make_response(("", 204, {'Access-Control-Max-Age': 86400}))
-
+api = API(app)
 
 from . import maintenance, talk  # noqa

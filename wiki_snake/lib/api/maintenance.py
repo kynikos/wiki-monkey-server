@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from . import api, CORSResource
+from . import api
 ma = api.ma
 
 
@@ -29,9 +29,9 @@ class OutSchema(api.Schema):
     ccc = ma.Str()
 
 
-@api.route('/maintenance/')
-class MaintenanceAPI(CORSResource):
+@api.resource()
+class Maintenance(api.Resource):
 
-    @api.marshal(InSchema(), OutSchema())
-    def get(self, indata):
+    @api.post(InSchema(), OutSchema())
+    def init(self, indata):
         return {'bbb': "Hello World", 'ccc': indata.aaa}

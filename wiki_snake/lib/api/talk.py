@@ -16,8 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from . import api, CORSResource
-from ..models.talk import Talk
+from . import api
+from ..models.talk import Talk as mTalk
 ma = api.ma
 
 
@@ -30,9 +30,9 @@ class OutSchema(api.Schema):
     ccc = ma.Str()
 
 
-@api.route('/talk/')
-class TalksAPI(CORSResource):
+@api.resource()
+class Talk(api.Resource):
 
-    @api.marshal(InSchema(), OutSchema())
-    def post(self, indata):
+    @api.get(InSchema(), OutSchema())
+    def get(self, indata):
         return {'bbb': "Hello World", 'ccc': indata.aaa}
