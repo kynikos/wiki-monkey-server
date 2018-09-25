@@ -16,9 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
-# from flask_rip import IMPLICIT, EXPLICIT, API, APISpec  # TODO
-from ..flask_rip import IMPLICIT, EXPLICIT, API, APISpec  # TODO
-
 from ..app import app
 
 openapi_spec = APISpec(
@@ -29,7 +26,7 @@ openapi_spec = APISpec(
     ),
 )
 
-api = API(app, base_method_path=IMPLICIT | EXPLICIT,
+api = API(app, base_method_path=IMPLICIT,
           openapi_spec=openapi_spec)
 
-from . import maintenance, talk  # noqa
+from . import maintenance, bookmark  # noqa

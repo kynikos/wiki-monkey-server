@@ -29,9 +29,9 @@ class OutSchema(api.Schema):
     ccc = ma.Str()
 
 
-@api.resource()
-class Maintenance:
+maintenance = api.create_resource('Maintenance')
 
-    @api.post(InSchema(), OutSchema())
-    def init(self, indata):
-        return {'bbb': "Hello World", 'ccc': indata.aaa}
+
+@maintenance.post(InSchema(), OutSchema())
+def init(indata):
+    return {'bbb': "Hello World", 'ccc': indata.aaa}

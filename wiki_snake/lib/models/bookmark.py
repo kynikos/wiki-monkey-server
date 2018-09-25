@@ -16,23 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
-from . import api
-from ..models.talk import Talk as mTalk
-ma = api.ma
+from . import database as db
 
 
-class InSchema(api.Schema):
-    aaa = ma.Str()
-
-
-class OutSchema(api.Schema):
-    bbb = ma.Str()
-    ccc = ma.Str()
-
-
-talk = api.create_resource('Talk')
-
-
-@talk.get(InSchema(), OutSchema())
-def get(indata):
-    return {'bbb': "Hello World", 'ccc': indata.aaa}
+class Bookmark(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
