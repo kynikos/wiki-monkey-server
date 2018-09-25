@@ -19,11 +19,11 @@
 # from flask_rip import IMPLICIT, EXPLICIT, API, APISpec  # TODO
 from ..flask_rip import IMPLICIT, EXPLICIT, API, APISpec  # TODO
 
-from ..app import package, app
+from ..app import app
 
 openapi_spec = APISpec(
     title='Wiki Monkey',
-    version=package['version'],
+    version='0.1.0',
     info=dict(
         description='Wiki Monkey server API'
     ),

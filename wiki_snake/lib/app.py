@@ -18,11 +18,6 @@
 
 from flask import Flask
 from flask_cors import CORS
-import json
-
-# TODO: Is assuming the package.json path going to break the app in production?
-with open('../package.json') as pj:
-    package = json.load(pj)
 
 # 'cliargs' and 'app' are assigned in run() as global variables to ease
 # importing them from the subpackages without e.g. requiring to pass them as

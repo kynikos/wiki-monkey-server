@@ -1,4 +1,6 @@
+apispec
 flask-restinpeace
 Flask-SQLAlchemy
 flask-cors
+flask-marshmallow
 pyxdg
