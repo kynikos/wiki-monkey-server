@@ -17,8 +17,8 @@
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
 # TODO: Ways to improve
-#       https://flask-restful.readthedocs.io/en/latest/quickstart.html
-#       https://flask-restplus.readthedocs.io/en/stable/parsing.html
+#       https://flask-restful.readthedocs.io/en/latest/
+#       https://flask-restplus.readthedocs.io/en/latest/
 #       https://flask-marshmallow.readthedocs.io/en/latest/
 
 
