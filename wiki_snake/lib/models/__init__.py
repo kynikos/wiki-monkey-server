@@ -35,8 +35,3 @@ database = SQLAlchemy(app)
 
 def init_database():
     database.create_all()
-
-
-# TODO: Also test if it's a valid database
-if not os.path.isfile(cliargs.db_path):
-    init_database()

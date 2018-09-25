@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 from flask import Flask
 from flask_cors import CORS
 
@@ -31,6 +32,10 @@ def run(cliargs_):
     global cliargs
     cliargs = cliargs_
 
+    dbfile_just_created = False
+    if not os.path.isfile(cliargs.db_path):
+        dbfile_just_created = True
+
     # 'api' must be imported by the subpackages, so assign it globally
     global app
     app = Flask(__name__)
@@ -39,6 +44,9 @@ def run(cliargs_):
 
     # 'models' must be imported *before* 'api'!!!
     from . import models, api  # noqa
+
+    if dbfile_just_created:
+        models.init_database()
 
     app.run(host=cliargs.host,
             port=cliargs.port,

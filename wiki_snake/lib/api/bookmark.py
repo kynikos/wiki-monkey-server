@@ -28,7 +28,7 @@ class CanonicalSpecialPageName(ma.String):
         return None if value is False else value
 
 
-class sBookmark(api.Schema):
+class _sBookmark(api.Schema):
     url = ma.String()
     wgArticleId = ma.Integer()
     wgPageName = ma.String()
@@ -49,6 +49,15 @@ class sBookmark(api.Schema):
     wgPageContentModel = ma.String()
 
 
+class sBookmarkIn(_sBookmark):
+    pass
+
+
+class sBookmarkOut(_sBookmark):
+    time_created = ma.DateTime()
+    time_updated = ma.DateTime()
+
+
 class sConfirm(api.Schema):
     success = ma.Boolean()
 
@@ -56,14 +65,14 @@ class sConfirm(api.Schema):
 @api.resource()
 class Bookmark:
 
-    @api.get(None, sBookmark(many=True))
+    @api.get(None, sBookmarkOut(many=True))
     def get(self, indata):
         """
         List all the saved bookmarks.
         """
         return mBookmark.query.all()
 
-    @api.put(sBookmark(), sConfirm())
+    @api.put(sBookmarkIn(), sConfirm())
     def put(self, indata):
         """
         Save a new bookmark.
