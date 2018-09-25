@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
+import flask_migrate as fm
+
 from . import api
 from ..models import database as db, init_database
 ma = api.ma
@@ -32,6 +34,33 @@ class sConfirm(api.Schema):
 maintenance = api.create_resource('Maintenance')
 
 
+@maintenance.post(None, sConfirm())
+def init_migration(indata):
+    """
+    Initializes database-migration support with Flask-Migrate and Alembic.
+    """
+    fm.init()
+    return {'success': True}
+
+
+@maintenance.post(None, sConfirm())
+def create_migration(indata):
+    """
+    Creates an automatic database-migration revision script.
+    """
+    fm.migrate()
+    return {'success': True}
+
+
+@maintenance.post(None, sConfirm())
+def upgrade_database(indata):
+    """
+    Upgrades the database to the latest revision.
+    """
+    fm.upgrade()
+    return {'success': True}
+
+
 @maintenance.get(None, sInfo())
 def database_info(indata):
     """
@@ -40,13 +69,3 @@ def database_info(indata):
     return {
         'user_version': db.engine.execute('PRAGMA user_version').fetchone()[0],
     }
-
-
-@maintenance.post(None, sConfirm())
-def force_init_database(indata):
-    """
-    Force the (re-)initialization of the database, e.g. creating
-    (any missing) tables.
-    """
-    init_database()
-    return {'success': True}

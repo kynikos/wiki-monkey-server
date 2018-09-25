@@ -3,6 +3,7 @@ from invoke import task, run
 
 AUXDIR = './auxiliary/'
 SERVERDIR = './wiki_snake/'
+PORT = 13502
 
 
 # TODO: Remind in documentation that the certificate must be stored in the browser
@@ -21,7 +22,18 @@ def gencert(ctx):
 
 
 @task
-def serve(ctx, port=13502):
+def init(ctx, port=PORT):
+    """
+    Initialize the development environment.
+    """
+    run('cd {} && python3 -m main --port {} --init-only'.format(
+        SERVERDIR, port),
+        # http://www.pyinvoke.org/faq.html#calling-python-or-python-scripts-prints-all-the-output-at-the-end-of-the-run
+        pty=True)
+
+
+@task
+def serve(ctx, port=PORT):
     """
     Serve the database on localhost.
     """

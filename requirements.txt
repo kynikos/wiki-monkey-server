@@ -1,6 +1,7 @@
 apispec
 flask-restinpeace
 Flask-SQLAlchemy
+Flask-Migrate
 flask-cors
 flask-marshmallow
 pyxdg

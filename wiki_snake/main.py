@@ -36,6 +36,9 @@ from lib import app
 argparser = argparse.ArgumentParser(description="Wiki Monkey database server.",
                                     add_help=True)
 
+argparser.add_argument('--init-only', action='store_true',
+                       help='initialize the development environment and exit')
+
 argparser.add_argument('--host', metavar='HOST', action='store',
                        default='localhost',
                        help='the hostname to listen on '
