@@ -17,6 +17,7 @@
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
 import flask_migrate as fm
+import sqlalchemy as sa
 
 from . import api
 from ..models import database as db
@@ -48,7 +49,10 @@ def database_info(indata):
     """
     Read some database metadata.
     """
-    # TODO: Get the Alembic revision instead
-    return {
-        'user_version': db.engine.execute('PRAGMA user_version').fetchone()[0],
+    # flask_migrate.current() prints to some kind of stream that I haven't
+    # found a way to capture (no, not sys.stdout nor sys.stderr)
+    return {'database_revision': db.session.execute(
+        sa.select(('version_num', )).\
+        select_from('alembic_version')).\
+        scalar(),
     }
