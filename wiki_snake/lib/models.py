@@ -16,17 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-import os.path
-import xdg.BaseDirectory
-from flask_sqlalchemy import SQLAlchemy
-
-from .app import app
-
-datadir = xdg.BaseDirectory.save_data_path('wikimonkey')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.path.join('sqlite:////', datadir,
-                                                     'db.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+from .app import db
 
 
 class Talk(db.Model):
