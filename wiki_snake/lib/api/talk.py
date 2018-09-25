@@ -30,9 +30,9 @@ class OutSchema(api.Schema):
     ccc = ma.Str()
 
 
-@api.resource()
-class Talk(api.Resource):
+talk = api.create_resource('Talk')
 
-    @api.get(InSchema(), OutSchema())
-    def get(self, indata):
-        return {'bbb': "Hello World", 'ccc': indata.aaa}
+
+@talk.get(InSchema(), OutSchema())
+def get(indata):
+    return {'bbb': "Hello World", 'ccc': indata.aaa}

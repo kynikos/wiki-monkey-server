@@ -30,7 +30,7 @@ class OutSchema(api.Schema):
 
 
 @api.resource()
-class Maintenance(api.Resource):
+class Maintenance:
 
     @api.post(InSchema(), OutSchema())
     def init(self, indata):

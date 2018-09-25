@@ -16,8 +16,19 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from ..app import app
+from flask_rip import  IMPLICIT, EXPLICIT, API, APISpec
 
-api = API(app, base_method_path=IMPLICIT | EXPLICIT)
+from ..app import package, app
+
+openapi_spec = APISpec(
+    title='Wiki Monkey',
+    version=package['version'],
+    info=dict(
+        description='Wiki Monkey server API'
+    ),
+)
+
+api = API(app, base_method_path=IMPLICIT | EXPLICIT,
+          openapi_spec=openapi_spec)
 
 from . import maintenance, talk  # noqa
