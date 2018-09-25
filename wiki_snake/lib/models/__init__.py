@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
+import os.path
 # TODO: I will very soon need flask-migrate/alembic too
 #       https://flask-migrate.readthedocs.io/en/latest/
 #       http://alembic.zzzcomputing.com/en/latest/
@@ -23,10 +24,13 @@ from flask_sqlalchemy import SQLAlchemy
 
 from ..app import cliargs, app
 
-app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///' +
-                                         cliargs.db_path.lstrip('/'))
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    'sqlite:///' + os.path.abspath(cliargs.db_path))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # TODO: Store the database version in schema.user_version?
 #       https://www.sqlite.org/pragma.html#pragma_user_version
 database = SQLAlchemy(app)
+
+if not os.path.isfile(cliargs.db_path):
+    database.create_all()

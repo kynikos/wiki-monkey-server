@@ -28,7 +28,7 @@ def serve(ctx, port=13502):
         '--origin https://wiki.archlinux.org '
         '--origin http://wiki.archlinux.org '
         '--ssl-cert {} --ssl-key {} '
-        '--db-path ../../auxiliary/test-database.sqlite '
+        '--db-path ../auxiliary/test-database.sqlite '
         '--debug'.format(SERVERDIR, port,
                          os.path.join('..', AUXDIR, 'dev-cert.pem'),
                          os.path.join('..', AUXDIR, 'dev-key.pem')),
