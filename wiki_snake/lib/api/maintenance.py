@@ -16,22 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from flask import Flask
-from flask_cors import CORS
+from flask.views import MethodView
+from flask import jsonify
+from ..models.talk import Talk
 
 
-def run(cliargs):
-    app = Flask(__name__)
-    CORS(app, origins=cliargs.origins or ['*'])
-
-    from . import models
-    models.init(app, cliargs.db_path)
-    # NOTE: It is necessary to *first* init the models and *then* the API
-    from . import api
-    api.init(app)
-
-    app.run(host=cliargs.host,
-            port=cliargs.port,
-            ssl_context=(cliargs.ssl_cert, cliargs.ssl_key)
-            if cliargs.ssl_cert and cliargs.ssl_key else 'adhoc',
-            debug=cliargs.debug)
+class MaintenanceAPI(MethodView):
+    def post(self, action):
+        return jsonify({'foo': "Hello World"})

@@ -16,14 +16,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-import os.path
-import xdg.BaseDirectory
 from flask_sqlalchemy import SQLAlchemy
-from ..app import app
 
-# TODO: Allow setting the path
-datadir = xdg.BaseDirectory.save_data_path('wikimonkey')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.path.join('sqlite:////', datadir,
-                                                     'db.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-database = SQLAlchemy(app)
+# 'database' is assigned in init() as a global variable to ease importing it
+# from the models' modules
+database = None
+
+
+def init(app, db_path):
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path.lstrip('/')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    # 'database' must be imported by the models' modules, so assign it globally
+    global database
+    database = SQLAlchemy(app)

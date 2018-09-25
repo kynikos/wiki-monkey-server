@@ -16,6 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
+import os.path
+import xdg.BaseDirectory
+import argparse
+
 # NOTE: WHY NOT MOVE 'api' AND 'models' NEXT TO THIS SCRIPT?
 # Due to werkzeug issue #461 this is the only configuration to get this
 # app running with Flask in debug=True mode (in debug=False mode everything
@@ -27,6 +31,43 @@
 # (trying 'python -m server.main' from the parent directory fails).
 # https://github.com/pallets/werkzeug/issues/461
 # https://chase-seibert.github.io/blog/2015/06/12/flask-werkzeug-reloader-python-dash-m.html
+from lib import app
+
+argparser = argparse.ArgumentParser(description="Wiki Monkey database server.",
+                                    add_help=True)
+
+argparser.add_argument('--host', metavar='HOST', action='store',
+                       default='localhost',
+                       help='the hostname to listen on '
+                       '(default: %(default)s)')
+
+argparser.add_argument('-p', '--port', metavar='NUMBER', action='store',
+                       required=True, type=int,
+                       help='the port number to listen on (required)')
+
+argparser.add_argument('--origin', metavar='HOST', action='append',
+                       dest='origins',
+                       help='an origin to allow requests from; if not '
+                       'provided, all origins will be allowed')
+
+argparser.add_argument('--ssl-cert', metavar='PATH', action='store',
+                       help='the path to the SSL certificate file; '
+                       'if not provided, an ad-hoc certificate will be '
+                       'created')
+
+argparser.add_argument('--ssl-key', metavar='PATH', action='store',
+                       help='the path to the SSL key file; '
+                       'if not provided, an ad-hoc certificate will be '
+                       'created')
+
+datadir = xdg.BaseDirectory.save_data_path('wikimonkey')
+argparser.add_argument('--db-path', metavar='PATH', action='store',
+                       default=os.path.join(datadir, 'db.sqlite'),
+                       help='the path to the SQLite database file '
+                       '(default: %(default)s)')
+
+argparser.add_argument('--debug', action='store_true',
+                       help='run the server in debug mode')
 
 if __name__ == "__main__":
-    from lib import app  # noqa
+    app.run(argparser.parse_args())
