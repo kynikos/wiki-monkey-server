@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from ..flask_action_api import API  # from flask_rip import API  # TODO
+from flask_rip import IMPLICIT, EXPLICIT, API
 
 from ..app import app
 
-api = API(app)
+api = API(app, base_method_path=IMPLICIT | EXPLICIT)
 
 from . import maintenance, talk  # noqa
