@@ -17,7 +17,7 @@
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
 from . import api
-from ..models import database as db
+from ..models import init_database
 ma = api.ma
 
 
@@ -29,6 +29,10 @@ maintenance = api.create_resource('Maintenance')
 
 
 @maintenance.post(None, sConfirm())
-def init_database(indata):
-    db.create_all()
+def force_init_database(indata):
+    """
+    Force the (re-)initialization of the database, e.g. creating
+    (any missing) tables.
+    """
+    init_database()
     return {'success': True}

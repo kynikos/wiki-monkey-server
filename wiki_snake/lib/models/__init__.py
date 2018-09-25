@@ -32,6 +32,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #       https://www.sqlite.org/pragma.html#pragma_user_version
 database = SQLAlchemy(app)
 
+
+def init_database():
+    database.create_all()
+
+
 # TODO: Also test if it's a valid database
 if not os.path.isfile(cliargs.db_path):
-    database.create_all()
+    init_database()

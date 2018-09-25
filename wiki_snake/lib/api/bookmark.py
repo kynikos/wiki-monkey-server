@@ -58,10 +58,16 @@ class Bookmark:
 
     @api.get(None, sBookmark(many=True))
     def get(self, indata):
+        """
+        List all the saved bookmarks.
+        """
         return mBookmark.query.all()
 
     @api.put(sBookmark(), sConfirm())
     def put(self, indata):
+        """
+        Save a new bookmark.
+        """
         bookmark = mBookmark(
             url=indata.url,
             wgArticleId=indata.wgArticleId,
