@@ -21,6 +21,7 @@ import xdg.BaseDirectory
 from flask_sqlalchemy import SQLAlchemy
 from ..app import app
 
+# TODO: Allow setting the path
 datadir = xdg.BaseDirectory.save_data_path('wikimonkey')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.path.join('sqlite:////', datadir,
                                                      'db.sqlite')

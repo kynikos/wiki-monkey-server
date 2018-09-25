@@ -19,7 +19,7 @@
 from ..app import app
 from .talk import TalkAPI
 
-# TODO: Improve the API
+# TODO: Ways to improve
 #       https://flask-restful.readthedocs.io/en/latest/quickstart.html
 #       https://flask-restplus.readthedocs.io/en/stable/parsing.html
 #       https://flask-marshmallow.readthedocs.io/en/latest/
