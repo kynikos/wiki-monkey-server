@@ -16,15 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from flask import jsonify
-from .app import app
+from ..app import app
+from .talk import TalkAPI
 
-# TODO: Improve the API
-#       https://flask-restful.readthedocs.io/en/latest/quickstart.html
-#       https://flask-restplus.readthedocs.io/en/stable/parsing.html
-#       https://flask-marshmallow.readthedocs.io/en/latest/
-
-
-@app.route("/")
-def hello_world():
-    return jsonify({'foo': "Hello World"})
+talk_view = TalkAPI.as_view('talk_api')
+app.add_url_rule('/talk/', defaults={'talk_id': None},
+                 view_func=talk_view, methods=['GET'])
+app.add_url_rule('/talk/', view_func=talk_view, methods=['POST'])
+app.add_url_rule('/talk/<int:talk_id>', view_func=talk_view,
+                 methods=['GET', 'PUT', 'DELETE'])

@@ -16,9 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-from .app import db
+from flask.views import MethodView
+from flask import jsonify
+from ..models.talk import Talk
 
 
-class Talk(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+class TalkAPI(MethodView):
+    def get(self, talk_id):
+        return jsonify({'foo': "Hello World"})

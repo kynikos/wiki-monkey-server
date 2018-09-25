@@ -33,9 +33,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.path.join('sqlite:////', datadir,
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Initialize the models and API only *after* setting up the app and the
-# database (which they in turn import)
-from . import models, api  # noqa
+# Initialize the API only *after* setting up the app and the database (which
+# it then in turn imports)
+from . import api  # noqa
 
 # TODO: Allow setting these parameters
 #       https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https
