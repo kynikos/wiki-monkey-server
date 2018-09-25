@@ -66,6 +66,7 @@ def database_info(indata):
     """
     Read some database metadata.
     """
+    # TODO: Get the Alembic revision instead
     return {
         'user_version': db.engine.execute('PRAGMA user_version').fetchone()[0],
     }

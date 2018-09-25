@@ -36,6 +36,7 @@ def init_migrations():
 
 
 def init_database():
+    # TODO: Also test if it's a valid database
     if not os.path.isfile(cliargs.db_path):
         # Don't use database.create_all(), let Alembic apply the initial
         # migration with the first upgrade below; only create the empty file
