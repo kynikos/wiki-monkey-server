@@ -16,26 +16,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
-import os.path
-import xdg.BaseDirectory
 from flask import Flask
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 # TODO: Allow setting the origins
 CORS(app, origins=('https://wiki.archlinux.org', ))
 
-# TODO: Allow setting the path
-datadir = xdg.BaseDirectory.save_data_path('wikimonkey')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.path.join('sqlite:////', datadir,
-                                                     'db.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-# Initialize the API only *after* setting up the app and the database (which
-# it then in turn imports)
-from . import api  # noqa
+# *First* initialize the app above, *then* the API, *finally* the models
+from . import api, models  # noqa
 
 # TODO: Allow setting these parameters
 #       https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https
