@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
-from sqlalchemy.sql import func
+import sqlalchemy as sa
 
 from . import database as db
 
@@ -42,6 +42,55 @@ class Bookmark(db.Model):
     wgPageContentLanguage = db.Column(db.String)
     wgPageContentModel = db.Column(db.String)
     time_created = db.Column(db.DateTime(timezone=True),
-                             server_default=func.now())
+                             server_default=sa.sql.func.now())
     time_updated = db.Column(db.DateTime(timezone=True),
-                             onupdate=func.now())
+                             onupdate=sa.sql.func.now())
+
+
+# SQLAlchemy doesn't support SQLite's INSERT OR REPLACE
+# TODO: Generate the statement dynamically from the Model
+#       Maybe even create a function that also takes the parameters to be
+#       upserted so they can be used to generate only the relevant keys
+insert_or_replace = sa.text('''
+    INSERT OR REPLACE
+    INTO bookmark (
+        url,
+        wgArticleId,
+        wgPageName,
+        wgRelevantPageName,
+        wgCanonicalSpecialPageName,
+        wgCanonicalNamespace,
+        wgNamespaceNumber,
+        wgTitle,
+        wgRevisionId,
+        wgCurRevisionId,
+        wgDiffOldId,
+        wgDiffNewId,
+        wgAction,
+        wgIsArticle,
+        wgIsProbablyEditable,
+        wgRelevantPageIsProbablyEditable,
+        wgPageContentLanguage,
+        wgPageContentModel
+    )
+    VALUES (
+        :url,
+        :wgArticleId,
+        :wgPageName,
+        :wgRelevantPageName,
+        :wgCanonicalSpecialPageName,
+        :wgCanonicalNamespace,
+        :wgNamespaceNumber,
+        :wgTitle,
+        :wgRevisionId,
+        :wgCurRevisionId,
+        :wgDiffOldId,
+        :wgDiffNewId,
+        :wgAction,
+        :wgIsArticle,
+        :wgIsProbablyEditable,
+        :wgRelevantPageIsProbablyEditable,
+        :wgPageContentLanguage,
+        :wgPageContentModel
+    )
+''')

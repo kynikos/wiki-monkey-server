@@ -18,7 +18,7 @@
 
 from . import api
 from ..models import database as db
-from ..models.bookmark import Bookmark as mBookmark
+from ..models.bookmark import Bookmark as mBookmark, insert_or_replace
 ma = api.ma
 
 
@@ -75,9 +75,9 @@ class Bookmark:
     @api.post(sBookmarkIn(), sConfirm())
     def post(self, indata):
         """
-        Save a new bookmark.
+        Save a bookmark.
         """
-        bookmark = mBookmark(
+        params = dict(
             url=indata.url,
             wgArticleId=indata.wgArticleId,
             wgPageName=indata.wgPageName,
@@ -97,6 +97,7 @@ class Bookmark:
             wgPageContentLanguage=indata.wgPageContentLanguage,
             wgPageContentModel=indata.wgPageContentModel,
         )
-        db.session.add(bookmark)
+
+        db.session.execute(insert_or_replace, params)
         db.session.commit()
         return {'success': True}
