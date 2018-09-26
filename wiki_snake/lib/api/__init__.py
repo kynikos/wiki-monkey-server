@@ -32,4 +32,4 @@ openapi_spec = APISpec(
 api = API(app, base_method_path=IMPLICIT,
           openapi_spec=openapi_spec)
 
-from . import maintenance, bookmark  # noqa
+from . import maintenance, bookmark

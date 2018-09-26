@@ -93,7 +93,7 @@ class Bookmark:
             wgAction=indata.wgAction,
             wgIsArticle=indata.wgIsArticle,
             wgIsProbablyEditable=indata.wgIsProbablyEditable,
-            wgRelevantPageIsProbablyEditable=indata.wgRelevantPageIsProbablyEditable,  # noqa
+            wgRelevantPageIsProbablyEditable=indata.wgRelevantPageIsProbablyEditable,
             wgPageContentLanguage=indata.wgPageContentLanguage,
             wgPageContentModel=indata.wgPageContentModel,
         )

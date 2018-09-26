@@ -14,7 +14,7 @@ setup(
         'Environment :: Web Environment',
         'Framework :: Flask',
         'Intended Audience :: Information Technology',
-        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',  # noqa
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',

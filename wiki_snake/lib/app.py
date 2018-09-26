@@ -41,7 +41,7 @@ def _pre_run(cliargs_, cors):
         CORS(app, origins=cliargs.origins or ['*'])
 
     # 'models' must be imported *before* 'api'!!!
-    from . import models, api  # noqa
+    from . import models, api
 
     return models, api
 
