@@ -17,6 +17,7 @@
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
 import os.path
+import sqlalchemy as sa
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import (Migrate, init as fm_init, migrate as fm_migrate,
                            upgrade as fm_upgrade)
@@ -52,3 +53,21 @@ def init_database():
 
     with app.app_context():
         fm_upgrade()
+
+
+# SQLAlchemy doesn't support SQLite's ON CONFLICT DO UPDATE
+# https://www.sqlite.org/lang_UPSERT.html
+# TODO: ...yet? Check for updates
+def upsert(table, fields, on_conflict):
+    return sa.text('''
+        INSERT INTO {table} ({fields})
+        VALUES ({values})
+        ON CONFLICT({on_conflict})
+        DO UPDATE SET {fields_values}
+    '''.format(
+        table=table,
+        fields=', '.join(fields),
+        values=', '.join([''.join((':', f)) for f in fields]),
+        on_conflict=', '.join(on_conflict),
+        fields_values=', '.join(['=:'.join((f, f)) for f in fields]),
+    ))

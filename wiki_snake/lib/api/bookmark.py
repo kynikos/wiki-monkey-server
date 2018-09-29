@@ -17,8 +17,8 @@
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
 from . import api
-from ..models import database as db
-from ..models.bookmark import Bookmark as mBookmark, insert_or_replace
+from ..models import database as db, upsert
+from ..models.bookmark import Bookmark as mBookmark
 ma = api.ma
 
 
@@ -99,6 +99,7 @@ class Bookmark:
             wgPageContentModel=indata.wgPageContentModel,
         )
 
-        db.session.execute(insert_or_replace, params)
+        db.session.execute(upsert(
+            'bookmark', params.keys(), ('url', )), params)
         db.session.commit()
         return {'success': True}
