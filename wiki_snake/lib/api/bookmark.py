@@ -53,6 +53,10 @@ class sBookmarkIn(_sBookmark):
     pass
 
 
+class sBookmarkId(_sBookmark):
+    id = ma.Integer()
+
+
 class sBookmarkOut(_sBookmark):
     id = ma.Integer()
     time_created = ma.DateTime()
@@ -101,5 +105,15 @@ class Bookmark:
 
         db.session.execute(upsert(
             'bookmark', params.keys(), ('url', )), params)
+        db.session.commit()
+        return {'success': True}
+
+    @api.delete(sBookmarkId(), sConfirm())
+    def delete(self, indata):
+        """
+        Delete a bookmark.
+        """
+        bookmark = mBookmark.query.get(indata.id)
+        db.session.delete(bookmark)
         db.session.commit()
         return {'success': True}
