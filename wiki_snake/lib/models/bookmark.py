@@ -43,5 +43,7 @@ class Bookmark(db.Model):
     wgPageContentModel = db.Column(db.String)
     time_created = db.Column(db.DateTime(timezone=True),
                              server_default=sa.sql.func.now())
-    time_updated = db.Column(db.DateTime(timezone=True),
-                             onupdate=sa.sql.func.now())
+    # TODO: SQLite doesn't seem to support 'onupdate'
+    #       https://stackoverflow.com/a/33532154/645498
+    time_updated = db.Column(db.DateTime(timezone=True))
+                             # onupdate=sa.sql.func.now())

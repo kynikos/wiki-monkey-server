@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
+import datetime
+
 from . import api
 from ..models import database as db, upsert
 from ..models.bookmark import Bookmark as mBookmark
@@ -101,6 +103,9 @@ class Bookmark:
             wgRelevantPageIsProbablyEditable=indata.wgRelevantPageIsProbablyEditable,
             wgPageContentLanguage=indata.wgPageContentLanguage,
             wgPageContentModel=indata.wgPageContentModel,
+            # TODO: SQLite doesn't seem to support 'onupdate'
+            #       https://stackoverflow.com/a/33532154/645498
+            time_updated=datetime.datetime.utcnow(),
         )
 
         db.session.execute(upsert(
