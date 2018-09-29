@@ -76,7 +76,7 @@ class Bookmark:
     @api.post(sBookmarkIn(), sConfirm())
     def post(self, indata):
         """
-        Save a bookmark.
+        Add or update a bookmark.
         """
         params = dict(
             url=indata.url,
