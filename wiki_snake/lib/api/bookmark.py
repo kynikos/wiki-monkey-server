@@ -54,6 +54,7 @@ class sBookmarkIn(_sBookmark):
 
 
 class sBookmarkOut(_sBookmark):
+    id = ma.Integer()
     time_created = ma.DateTime()
     time_updated = ma.DateTime()
 
