@@ -32,9 +32,9 @@ class CanonicalSpecialPageName(ma.String):
 
 class _sBookmark(api.Schema):
     url = ma.String()
-    section_id = ma.String()
-    section_number = ma.Integer()
-    section_title = ma.String()
+    section_id = ma.String(allow_none=True)
+    section_number = ma.Integer(allow_none=True)
+    section_title = ma.String(allow_none=True)
     wgArticleId = ma.Integer()
     wgPageName = ma.String()
     wgRelevantPageName = ma.String()
@@ -71,6 +71,11 @@ class sConfirm(api.Schema):
     success = ma.Boolean()
 
 
+class sConfirmWithData(api.Schema):
+    success = ma.Boolean()
+    bookmark = ma.Nested(sBookmarkOut)
+
+
 @api.resource()
 class Bookmark:
 
@@ -81,7 +86,7 @@ class Bookmark:
         """
         return mBookmark.query.all()
 
-    @api.post(sBookmarkIn(), sConfirm())
+    @api.post(sBookmarkIn(), sConfirmWithData())
     def post(self, indata):
         """
         Add or update a bookmark.
@@ -116,7 +121,13 @@ class Bookmark:
         db.session.execute(upsert(
             'bookmark', params.keys(), ('url', )), params)
         db.session.commit()
-        return {'success': True}
+        bookmark = mBookmark.query.filter(
+            mBookmark.url == params['url']).one()
+
+        return {
+            'success': True,
+            'bookmark': bookmark,
+        }
 
     @api.delete(sBookmarkId(), sConfirm())
     def delete(self, indata):
