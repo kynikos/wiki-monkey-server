@@ -32,6 +32,9 @@ class CanonicalSpecialPageName(ma.String):
 
 class _sBookmark(api.Schema):
     url = ma.String()
+    section_id = ma.String()
+    section_number = ma.Integer()
+    section_title = ma.String()
     wgArticleId = ma.Integer()
     wgPageName = ma.String()
     wgRelevantPageName = ma.String()
@@ -49,7 +52,6 @@ class _sBookmark(api.Schema):
     wgRelevantPageIsProbablyEditable = ma.Boolean()
     wgPageContentLanguage = ma.String()
     wgPageContentModel = ma.String()
-
 
 class sBookmarkIn(_sBookmark):
     pass
@@ -86,6 +88,9 @@ class Bookmark:
         """
         params = dict(
             url=indata.url,
+            section_id=indata.section_id,
+            section_number=indata.section_number,
+            section_title=indata.section_title,
             wgArticleId=indata.wgArticleId,
             wgPageName=indata.wgPageName,
             wgRelevantPageName=indata.wgRelevantPageName,
