@@ -50,3 +50,6 @@ class Bookmark(db.Model):
     #       https://stackoverflow.com/a/33532154/645498
     time_updated = db.Column(db.DateTime(timezone=True))
                              # onupdate=sa.sql.func.now())
+    action_due = db.Column(db.String)
+    time_due = db.Column(db.DateTime(timezone=True))
+    notes = db.Column(db.Text)

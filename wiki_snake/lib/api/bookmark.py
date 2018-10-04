@@ -52,6 +52,9 @@ class _sBookmark(api.Schema):
     wgRelevantPageIsProbablyEditable = ma.Boolean()
     wgPageContentLanguage = ma.String()
     wgPageContentModel = ma.String()
+    action_due = ma.String()
+    time_due = ma.DateTime()
+    notes = ma.String(allow_none=True)
 
 class sBookmarkIn(_sBookmark):
     pass
@@ -116,6 +119,9 @@ class Bookmark:
             # TODO: SQLite doesn't seem to support 'onupdate'
             #       https://stackoverflow.com/a/33532154/645498
             time_updated=datetime.datetime.utcnow(),
+            action_due=indata.action_due,
+            time_due=indata.time_due,
+            notes=indata.notes,
         )
 
         db.session.execute(upsert(
