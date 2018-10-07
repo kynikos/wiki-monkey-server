@@ -17,6 +17,7 @@
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
 import datetime
+import sqlalchemy as sa
 
 from . import api
 from ..models import database as db, upsert
@@ -28,6 +29,17 @@ class CanonicalSpecialPageName(ma.String):
     def _deserialize(self, value, attr, data):
         # 'wgCanonicalSpecialPageName' can be False
         return None if value is False else value
+
+
+class sBookmarkPage(api.Schema):
+    wgArticleId = ma.Integer()
+    wgPageName = ma.String()
+
+
+class sBookmarkSection(api.Schema):
+    wgArticleId = ma.Integer()
+    wgPageName = ma.String()
+    section_id = ma.String()
 
 
 class _sBookmark(api.Schema):
@@ -88,6 +100,29 @@ class Bookmark:
         List all the saved bookmarks.
         """
         return mBookmark.query.all()
+
+    @api.get(sBookmarkPage(), sBookmarkOut(many=True))
+    def page(self, indata):
+        """
+        List all saved bookmarks for a particular page.
+        """
+        return mBookmark.query.filter(sa.or_(
+            mBookmark.wgArticleId == indata.wgArticleId,
+            mBookmark.wgPageName == indata.wgPageName,
+        ))
+
+    @api.get(sBookmarkSection(), sBookmarkOut(many=True))
+    def section(self, indata):
+        """
+        List all saved bookmarks for a particular page section.
+        """
+        return mBookmark.query.filter(
+            sa.or_(
+                mBookmark.wgArticleId == indata.wgArticleId,
+                mBookmark.wgPageName == indata.wgPageName,
+            ),
+            mBookmark.section_id == indata.section_id,
+        )
 
     @api.post(sBookmarkIn(), sConfirmWithData())
     def post(self, indata):
