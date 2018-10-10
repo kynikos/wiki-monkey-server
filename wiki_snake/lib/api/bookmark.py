@@ -127,9 +127,9 @@ class Bookmark:
     @api.post(sBookmarkIn(), sConfirmWithData())
     def post(self, indata):
         """
-        Add or update a bookmark.
+        Save a new bookmark.
         """
-        params = dict(
+        bookmark = mBookmark(
             url=indata.url,
             section_id=indata.section_id,
             section_number=indata.section_number,
@@ -159,11 +159,8 @@ class Bookmark:
             notes=indata.notes,
         )
 
-        db.session.execute(upsert(
-            'bookmark', params.keys(), ('url', )), params)
+        db.session.add(bookmark)
         db.session.commit()
-        bookmark = mBookmark.query.filter(
-            mBookmark.url == params['url']).one()
 
         return {
             'success': True,

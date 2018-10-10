@@ -23,7 +23,7 @@ from . import database as db
 
 class Bookmark(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String, unique=True)
+    url = db.Column(db.String)
     section_id = db.Column(db.String)
     section_number = db.Column(db.Integer)
     section_title = db.Column(db.String)
