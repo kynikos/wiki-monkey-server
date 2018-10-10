@@ -39,6 +39,10 @@ argparser = argparse.ArgumentParser(description="Wiki Monkey database server.",
 argparser.add_argument('--init-env', action='store_true',
                        help='initialize the development environment')
 
+argparser.add_argument('--revise', action='store_true',
+                       help='create an empty database-migration revision '
+                       'script')
+
 argparser.add_argument('--migrate', action='store_true',
                        help='create an automatic database-migration revision '
                        'script')

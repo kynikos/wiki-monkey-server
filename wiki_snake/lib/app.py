@@ -63,6 +63,8 @@ def maintain(cliargs_):
 
     if cliargs.init_env:
         models.init_migrations()
+    elif cliargs.revise:
+        models.create_revision()
     elif cliargs.migrate:
         models.create_migration()
     else:

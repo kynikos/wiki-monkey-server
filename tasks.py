@@ -34,6 +34,17 @@ def init(ctx):
 
 
 @task
+def revise(ctx):
+    """
+    Create an empty database-migration revision script.
+    """
+    run('cd {} && python3 -m aux --revise --db-path {}'.format(
+        SERVERDIR, TEST_DB),
+        # http://www.pyinvoke.org/faq.html#calling-python-or-python-scripts-prints-all-the-output-at-the-end-of-the-run
+        pty=True)
+
+
+@task
 def migrate(ctx):
     """
     Create an automatic database-migration revision script.
