@@ -72,6 +72,13 @@ class sBookmarkIn(_sBookmark):
     pass
 
 
+class sBookmarkPatch(api.Schema):
+    id = ma.Integer()
+    action_due = ma.String()
+    time_due = ma.DateTime()
+    notes = ma.String(allow_none=True)
+
+
 class sBookmarkId(_sBookmark):
     id = ma.Integer()
 
@@ -160,6 +167,24 @@ class Bookmark:
         )
 
         db.session.add(bookmark)
+        db.session.commit()
+
+        return {
+            'success': True,
+            'bookmark': bookmark,
+        }
+
+    @api.patch(sBookmarkPatch(), sConfirmWithData())
+    def patch(self, indata):
+        """
+        Update a bookmark.
+        """
+        bookmark = mBookmark.query.get(indata.id)
+
+        bookmark.action_due = indata.action_due
+        bookmark.time_due = indata.time_due
+        bookmark.notes = indata.notes
+
         db.session.commit()
 
         return {
