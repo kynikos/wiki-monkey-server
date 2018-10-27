@@ -30,8 +30,11 @@ class sInfo(api.Schema):
     database_revision = ma.String()
 
 
-class sConfirm(api.Schema):
+class sUpgrade(api.Schema):
     success = ma.Boolean()
+    noop = ma.Boolean()
+    old_revision = ma.String()
+    new_revision = ma.String()
 
 
 def get_database_revision():
@@ -46,13 +49,20 @@ def get_database_revision():
 maintenance = api.create_resource('Maintenance')
 
 
-@maintenance.post(None, sConfirm())
+@maintenance.post(None, sUpgrade())
 def upgrade_database(indata):
     """
     Upgrades the database to the latest revision.
     """
+    old_revision = get_database_revision()
     fm.upgrade()
-    return {'success': True}
+    new_revision = get_database_revision()
+    return {
+        'success': True,
+        'noop': old_revision == new_revision,
+        'old_revision': old_revision,
+        'new_revision': new_revision,
+    }
 
 
 @maintenance.get(None, sInfo())
