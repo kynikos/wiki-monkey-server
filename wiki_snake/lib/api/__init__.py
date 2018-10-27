@@ -19,11 +19,11 @@
 # from flask_rip import IMPLICIT, API, APISpec  # TODO
 from ..flask_rip import IMPLICIT, API, APISpec  # TODO
 
-from ..app import app
+from ..app import VERSION, app
 
 openapi_spec = APISpec(
     title='Wiki Snake',
-    version='0.1.0',  # TODO Extract the version from setup.py or something
+    version=VERSION,
     info=dict(
         description="Wiki Monkey's database server"
     ),

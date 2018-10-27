@@ -20,16 +20,27 @@ import flask_migrate as fm
 import sqlalchemy as sa
 
 from . import api
+from ..app import VERSION
 from ..models import database as db
 ma = api.ma
 
 
 class sInfo(api.Schema):
+    version = ma.String()
     database_revision = ma.String()
 
 
 class sConfirm(api.Schema):
     success = ma.Boolean()
+
+
+def get_database_revision():
+    # flask_migrate.current() prints to some kind of stream that I haven't
+    # found a way to capture (no, not sys.stdout nor sys.stderr)
+    return db.session.execute(
+        sa.select(('version_num', )).\
+        select_from('alembic_version')).\
+        scalar()
 
 
 maintenance = api.create_resource('Maintenance')
@@ -45,14 +56,11 @@ def upgrade_database(indata):
 
 
 @maintenance.get(None, sInfo())
-def database_info(indata):
+def info(indata):
     """
-    Read some database metadata.
+    Return some metadata.
     """
-    # flask_migrate.current() prints to some kind of stream that I haven't
-    # found a way to capture (no, not sys.stdout nor sys.stderr)
-    return {'database_revision': db.session.execute(
-        sa.select(('version_num', )).\
-        select_from('alembic_version')).\
-        scalar(),
+    return {
+        'version': VERSION,
+        'database_revision': get_database_revision(),
     }

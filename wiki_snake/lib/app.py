@@ -21,6 +21,8 @@ import os
 from flask import Flask
 from flask_cors import CORS
 
+VERSION = '0.1.0'
+
 # 'cliargs' and 'app' are assigned in run() as global variables to ease
 # importing them from the subpackages without e.g. requiring to pass them as
 # arguments to init functions
