@@ -31,6 +31,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 database = SQLAlchemy(app)
 migrate = Migrate(app, database)
 
+# TODO: Import/export tables from/to CSV/JSON
+
 
 def init_migrations():
     with app.app_context():
