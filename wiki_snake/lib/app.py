@@ -43,13 +43,13 @@ def _pre_run(cliargs_, cors):
         CORS(app, origins=cliargs.origins or ['*'])
 
     # 'models' must be imported *before* 'api'!!!
-    from . import models, api
+    from . import models, api, static
 
-    return models, api
+    return models, api, static
 
 
 def run(cliargs_):
-    models, api = _pre_run(cliargs_, True)
+    models, api, static = _pre_run(cliargs_, True)
 
     models.init_database()
 
@@ -61,7 +61,7 @@ def run(cliargs_):
 
 
 def maintain(cliargs_):
-    models, api = _pre_run(cliargs_, False)
+    models, api, static = _pre_run(cliargs_, False)
 
     if cliargs.init_env:
         models.init_migrations()
