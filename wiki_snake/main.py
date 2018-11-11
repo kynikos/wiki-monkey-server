@@ -33,8 +33,12 @@ import xdg.BaseDirectory
 # https://chase-seibert.github.io/blog/2015/06/12/flask-werkzeug-reloader-python-dash-m.html
 from lib import app
 
-argparser = argparse.ArgumentParser(description="Wiki Monkey database server.",
-                                    add_help=True)
+datadir = xdg.BaseDirectory.save_data_path('wiki-monkey')
+
+argparser = argparse.ArgumentParser(
+    description="Wiki Monkey database server.",
+    add_help=True,
+)
 
 argparser.add_argument('--host', metavar='HOST', action='store',
                        default='localhost',
@@ -60,7 +64,6 @@ argparser.add_argument('--ssl-key', metavar='PATH', action='store',
                        'if not provided, an ad-hoc certificate will be '
                        'created')
 
-datadir = xdg.BaseDirectory.save_data_path('wiki-snake')
 argparser.add_argument('--db-path', metavar='PATH', action='store',
                        default=os.path.join(datadir, 'db.sqlite'),
                        help='the path to the SQLite database file '
