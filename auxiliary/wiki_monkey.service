@@ -1,0 +1,8 @@
+[Unit]
+Description=Wiki Monkey's database server
+
+[Service]
+ExecStart=/usr/bin/wiki-monkey
+
+[Install]
+WantedBy=default.target

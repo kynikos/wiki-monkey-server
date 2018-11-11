@@ -33,5 +33,7 @@ setup(
     data_files=[
         # Relative paths are put inside the installation folder
         ('srv/static/', ['wiki-monkey/dist/*.js']),
+        # "-" has a special meaning in systemd unit names
+        ('/usr/lib/systemd/user/', ['auxiliary/wiki_monkey.service']),
     ],
 )
