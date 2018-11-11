@@ -22,4 +22,16 @@ setup(
     ],
     keywords='wikimonkey wiki-monkey wiki mediawiki archwiki wikipedia',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    entry_points={
+        'console_scripts': [
+            # Use wiki-monkey, not wiki-snake, since that's the application
+            # that users want to use after all
+            # TODO: Maybe just rename the whole project as wiki-monkey-server
+            'wiki-monkey = wiki_snake.main',
+        ],
+    },
+    data_files=[
+        # Relative paths are put inside the installation folder
+        ('srv/static/', ['wiki-monkey/dist/*.js']),
+    ],
 )
