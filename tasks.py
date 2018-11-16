@@ -7,19 +7,14 @@ PORT = 13502
 TEST_DB = '../auxiliary/test-database.sqlite'
 
 
-# TODO: Remind in documentation that the certificate must be stored in the browser
 @task
 def gencert(ctx):
     """
     Generate the certificate to serve the app from localhost.
     """
-    run('cd {} && openssl genrsa -out dev-key.pem 2048'.format(AUXDIR),
+    run('cd {} && python3 -m gencert --path {}'.format(SERVERDIR, AUXDIR),
+        # http://www.pyinvoke.org/faq.html#calling-python-or-python-scripts-prints-all-the-output-at-the-end-of-the-run
         pty=True)
-    run('cd {} && openssl req -new -key dev-key.pem -out dev.csr'.format(
-        AUXDIR), pty=True)
-    run('cd {} && openssl x509 -req -in dev.csr -signkey dev-key.pem '
-        '-out dev-cert.pem'.format(AUXDIR), pty=True)
-    os.remove(os.path.join(AUXDIR, 'dev.csr'))
 
 
 @task

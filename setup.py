@@ -28,6 +28,7 @@ setup(
             # that users want to use after all
             # TODO: Maybe just rename the whole project as wiki-monkey-server
             'wiki-monkey = wiki_snake.main',
+            'wiki-monkey-gencert = wiki_snake.gencert',
         ],
     },
     data_files=[
