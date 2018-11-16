@@ -20,6 +20,20 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Topic :: Database :: Database Engines/Servers',
     ),
+    python_requires='>=3',
+    install_requires=(
+        # Do not pin dependencies to specific versions in install_requires
+        # https://packaging.python.org/discussions/install-requires-vs-requirements
+        # Keep in sync with requirements.txt
+        'apispec',
+        'Flask-Cors',
+        'flask-marshmallow',
+        'Flask-Migrate',
+        'flask-restinpeace',
+        'Flask-SQLAlchemy',
+        'marshmallow-sqlalchemy',
+        'pyxdg',
+    ),
     keywords='wikimonkey wiki-monkey wiki mediawiki archwiki wikipedia',
     packages=find_packages(exclude=('contrib', 'docs', 'tests')),
     entry_points={
