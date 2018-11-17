@@ -22,10 +22,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import (Migrate, init as fm_init, revision as fm_revision,
                            migrate as fm_migrate, upgrade as fm_upgrade)
 
-from ..app import cliargs, app
+from ..app import conf, app
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    'sqlite:///' + os.path.abspath(cliargs.db_path))
+    'sqlite:///' + os.path.abspath(conf['db_path']))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 database = SQLAlchemy(app)
@@ -51,12 +51,12 @@ def create_migration():
 
 def init_database():
     # TODO: Also test if it's a valid database
-    if not os.path.isfile(cliargs.db_path):
+    if not os.path.isfile(conf['db_path']):
         # Don't use database.create_all(), let Alembic apply the initial
         # migration with the first upgrade below; only create the empty file
         # because the upgrade function doesn't do it
         # database.create_all()
-        open(cliargs.db_path, 'a').close()
+        open(conf['db_path'], 'a').close()
 
     with app.app_context():
         fm_upgrade()

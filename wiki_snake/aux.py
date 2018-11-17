@@ -16,16 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
-import os.path
 import argparse
-import xdg.BaseDirectory
 
 from lib import app
 
-datadir = xdg.BaseDirectory.save_data_path('wiki-monkey')
-
 argparser = argparse.ArgumentParser(
-    description="Wiki Monkey database server - Development operations",
+    description="wiki-snake - Wiki Monkey database server - Development operations",
     add_help=True,
 )
 
@@ -41,9 +37,7 @@ argparser.add_argument('--migrate', action='store_true',
                        'script')
 
 argparser.add_argument('--db-path', metavar='PATH', action='store',
-                       default=os.path.join(datadir, 'db.sqlite'),
-                       help='the path to the SQLite database file '
-                       '(default: %(default)s)')
+                       help='the path to the SQLite database file')
 
 if __name__ == "__main__":
     app.maintain(argparser.parse_args())

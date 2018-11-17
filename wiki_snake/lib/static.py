@@ -19,7 +19,7 @@
 from urllib.parse import urlparse
 from flask import Response, request, send_from_directory
 
-from .app import cliargs, app
+from .app import conf, app
 
 USERSCRIPTDIR = '../../wiki-monkey/dist/'
 

@@ -26,6 +26,7 @@ setup(
         # https://packaging.python.org/discussions/install-requires-vs-requirements
         # Keep in sync with requirements.txt
         'apispec',
+        'configfile',
         'Flask-Cors',
         'flask-marshmallow',
         'Flask-Migrate',
@@ -49,6 +50,9 @@ setup(
         # Relative paths are put inside the installation folder
         ('srv/static/', ('wiki-monkey/dist/*.js')),
         # "-" has a special meaning in systemd unit names
-        ('/usr/lib/systemd/user/', ('auxiliary/wiki_monkey.service')),
+        ('/usr/lib/systemd/user/', (
+            'auxiliary/wiki_monkey.service',
+            'auxiliary/wiki_monkey@.service',
+        )),
     ],
 )

@@ -19,6 +19,7 @@
 import os.path
 import argparse
 import xdg.BaseDirectory
+from configfile import ConfigFile
 
 # NOTE: WHY NOT MOVE 'api' AND 'models' NEXT TO THIS SCRIPT?
 # Due to werkzeug issue #461 this is the only configuration to get this
@@ -33,26 +34,83 @@ import xdg.BaseDirectory
 # https://chase-seibert.github.io/blog/2015/06/12/flask-werkzeug-reloader-python-dash-m.html
 from lib import app
 
+configdir = xdg.BaseDirectory.save_config_path('wiki-monkey')
 datadir = xdg.BaseDirectory.save_data_path('wiki-monkey')
 
+default_configfile = os.path.join(configdir, 'server.conf')
+base_conf = ConfigFile(
+    (
+        {
+            'host': 'localhost',
+            'port': '13502',
+            'origins': '',
+            'ssl_cert': '',
+            'ssl_key': '',
+            'db_path': os.path.join(datadir, 'db.sqlite'),
+            # No need to support 'debug' in the configuration file
+        },
+        {
+            'archwiki': (
+                {
+                    'origins': 'https://wiki.archlinux.org',
+                },
+                {},
+            ),
+            'wikipedia': (
+                {
+                    'origins': 'https://en.wikipedia.org',
+                },
+                {},
+            ),
+        },
+    ),
+    inherit_options=True,
+)
+
 argparser = argparse.ArgumentParser(
-    description="Wiki Monkey database server.",
+    description="wiki-snake - Wiki Monkey database server.",
     add_help=True,
 )
 
+argparser.add_argument('--conf', metavar='PATH', action='store',
+                       # Do not assign a default directly here, since I want
+                       # to understand later if the user explicitly set this
+                       # option or not
+                       # default
+                       help='the path to the configuration file; '
+                       'if not specified, a default file is created '
+                       'automatically at {}; '
+                       'if a path is specified, the file must instead already '
+                       'exist, or an error will be raised; '
+                       'options specified on the command line always '
+                       'override their values specified in the configuration '
+                       'file'.format(default_configfile))
+
+argparser.add_argument('--preset', metavar='NAME', action='store',
+                       help='the name of the configuration preset to be used')
+
 argparser.add_argument('--host', metavar='HOST', action='store',
-                       default='localhost',
+                       # Do not assign a default directly here, since I want
+                       # to understand later if the user explicitly set this
+                       # option or not
+                       # default
                        help='the hostname to listen on '
-                       '(default: %(default)s)')
+                       '(default: {})'.format(base_conf['host']))
 
 argparser.add_argument('-p', '--port', metavar='NUMBER', action='store',
-                       required=True, type=int,
-                       help='the port number to listen on (required)')
+                       # Do not assign a default directly here, since I want
+                       # to understand later if the user explicitly set this
+                       # option or not
+                       # default
+                       type=int,
+                       help='the port number to listen on '
+                       '(default: {})'.format(base_conf['port']))
 
 argparser.add_argument('--origin', metavar='HOST', action='append',
                        dest='origins',
                        help='an origin to allow requests from; if not '
-                       'provided, all origins will be allowed')
+                       'provided, all origins will be allowed; '
+                       'it can be specified multiple times')
 
 argparser.add_argument('--ssl-cert', metavar='PATH', action='store',
                        help='the path to the SSL certificate file; '
@@ -65,12 +123,15 @@ argparser.add_argument('--ssl-key', metavar='PATH', action='store',
                        'created')
 
 argparser.add_argument('--db-path', metavar='PATH', action='store',
-                       default=os.path.join(datadir, 'db.sqlite'),
+                       # Do not assign a default directly here, since I want
+                       # to understand later if the user explicitly set this
+                       # option or not
+                       # default
                        help='the path to the SQLite database file '
-                       '(default: %(default)s)')
+                       '(default: {})'.format(base_conf['db_path']))
 
 argparser.add_argument('--debug', action='store_true',
                        help='run the server in debug mode')
 
 if __name__ == "__main__":
-    app.run(argparser.parse_args())
+    app.run(default_configfile, base_conf, argparser.parse_args())

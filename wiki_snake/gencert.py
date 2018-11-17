@@ -23,10 +23,12 @@ import xdg.BaseDirectory
 
 datadir = xdg.BaseDirectory.save_data_path('wiki-monkey')
 
-# TODO: Remind in documentation that the certificate must be stored in the browser
+# TODO: Remind in documentation that the ssl_key and ssl_cert options must be
+#       updated in the configuration file, and the certificate must be stored
+#       in the browser
 
 argparser = argparse.ArgumentParser(
-    description="Wiki Monkey database server - Generate SSL certificate",
+    description="wiki-snake - Wiki Monkey database server - Generate SSL certificate",
     add_help=True,
 )
 
