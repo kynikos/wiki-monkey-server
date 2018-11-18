@@ -22,6 +22,9 @@ import argparse
 import xdg.BaseDirectory
 
 datadir = xdg.BaseDirectory.save_data_path('wiki-monkey')
+KEY = 'wiki-monkey-key.pem'
+CSR = 'wiki-monkey.csr'
+CERT = 'wiki-monkey-cert.pem'
 
 # TODO: Remind in documentation that the ssl_key and ssl_cert options must be
 #       updated in the configuration file, and the certificate must be stored
@@ -29,20 +32,25 @@ datadir = xdg.BaseDirectory.save_data_path('wiki-monkey')
 
 argparser = argparse.ArgumentParser(
     description="wiki-snake - Wiki Monkey database server - Generate SSL certificate",
+    epilog="""After generating the key and the certificate, their paths must be
+either passed to the command line when launching the server
+(see wiki-monkey --help), or more conveniently added to the server's
+configuration file (ssl_key and ssl_cert options). Moreover, since this is
+a self-signed certificate, the browser will very likely refuse to connect
+to the server until the certificate is manually accepted; this can be done
+for example by visiting the user-script's location and following the browser's
+prompts to store the certificate.""",
     add_help=True,
 )
 
 argparser.add_argument('--path', metavar='PATH', action='store',
-                       default=os.path.join(datadir, 'db.sqlite'),
-                       help='the path to the SQLite database file '
+                       default=datadir,
+                       help='the path to the directory where the key and '
+                       'certificate files will be saved '
                        '(default: %(default)s)')
 
 if __name__ == "__main__":
     cliargs = argparser.parse_args()
-
-    KEY = 'wiki-monkey-key.pem'
-    CSR = 'wiki-monkey.csr'
-    CERT = 'wiki-monkey-cert.pem'
 
     for args in (
         ('openssl', 'genrsa', '-out', KEY, '2048'),
@@ -52,3 +60,19 @@ if __name__ == "__main__":
         subprocess.run(args, cwd=cliargs.path)
 
     os.remove(os.path.join(cliargs.path, CSR))
+
+    print("""
+The key and certificate files have been successfully created, but
+their paths must be either passed to the command line when launching the server
+(see wiki-monkey --help), or more conveniently added to the server's
+configuration file, for example:
+
+  ssl_key = {}
+  ssl_cert = {}
+
+Moreover, since this is a self-signed certificate, the browser will very likely
+refuse to connect to the server until the certificate is manually accepted;
+this can be done for example by visiting the user-script's location and
+following the browser's prompts to store the certificate.
+""".format(
+    os.path.join(cliargs.path, KEY), os.path.join(cliargs.path, CERT)))
