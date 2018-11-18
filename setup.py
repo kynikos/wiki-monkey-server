@@ -33,6 +33,9 @@ setup(
         'flask-restinpeace',
         'Flask-SQLAlchemy',
         'marshmallow-sqlalchemy',
+        # pyOpenSSL is required only if using an ad-hoc certificate
+        # Optional dependencies shouldn't be added to install_requires
+        # 'pyOpenSSL',
         'pyxdg',
     ),
     keywords='wikimonkey wiki-monkey wiki mediawiki archwiki wikipedia',

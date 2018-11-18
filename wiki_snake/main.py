@@ -115,12 +115,12 @@ argparser.add_argument('--origin', metavar='HOST', action='append',
 argparser.add_argument('--ssl-cert', metavar='PATH', action='store',
                        help='the path to the SSL certificate file; '
                        'if not provided, an ad-hoc certificate will be '
-                       'created')
+                       'created (requires the pyOpenSSL library)')
 
 argparser.add_argument('--ssl-key', metavar='PATH', action='store',
                        help='the path to the SSL key file; '
                        'if not provided, an ad-hoc certificate will be '
-                       'created')
+                       'created (requires the pyOpenSSL library)')
 
 argparser.add_argument('--db-path', metavar='PATH', action='store',
                        # Do not assign a default directly here, since I want

@@ -105,8 +105,7 @@ def run(default_configfile, base_conf, cliargs):
     app.run(host=conf['host'],
             port=conf.get_int('port'),
             ssl_context=(conf['ssl_cert'], conf['ssl_key'])
-            # TODO: Using ad-hoc certificates requires the pyOpenSSL library
-            #       (python-pyopenssl package)
+            # Using ad-hoc certificates requires the pyOpenSSL library
             if conf['ssl_cert'] and conf['ssl_key'] else 'adhoc',
             # No need to support 'debug' in the configuration file
             debug=cliargs.debug)
