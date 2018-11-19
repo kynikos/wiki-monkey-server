@@ -87,7 +87,8 @@ argparser.add_argument('--conf', metavar='PATH', action='store',
                        'file'.format(default_configfile))
 
 argparser.add_argument('--preset', metavar='NAME', action='store',
-                       help='the name of the configuration preset to be used')
+                       help='optional name of the configuration preset to be '
+                       'used')
 
 argparser.add_argument('--host', metavar='HOST', action='store',
                        # Do not assign a default directly here, since I want
@@ -113,12 +114,12 @@ argparser.add_argument('--origin', metavar='HOST', action='append',
                        'it can be specified multiple times')
 
 argparser.add_argument('--ssl-cert', metavar='PATH', action='store',
-                       help='the path to the SSL certificate file; '
+                       help='optional path to an SSL certificate file; '
                        'if not provided, an ad-hoc certificate will be '
                        'created (requires the pyOpenSSL library)')
 
 argparser.add_argument('--ssl-key', metavar='PATH', action='store',
-                       help='the path to the SSL key file; '
+                       help='optional path to an SSL key file; '
                        'if not provided, an ad-hoc certificate will be '
                        'created (requires the pyOpenSSL library)')
 
