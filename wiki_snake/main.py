@@ -47,6 +47,7 @@ base_conf = ConfigFile(
             'ssl_cert': '',
             'ssl_key': '',
             'db_path': os.path.join(datadir, 'db.sqlite'),
+            'client_conf': os.path.join(configdir, 'client.json'),
             # No need to support 'debug' in the configuration file
         },
         {
@@ -130,6 +131,19 @@ argparser.add_argument('--db-path', metavar='PATH', action='store',
                        # default
                        help='the path to the SQLite database file '
                        '(default: {})'.format(base_conf['db_path']))
+
+argparser.add_argument('--client-conf', metavar='PATH', action='store',
+                       # Do not assign a default directly here, since I want
+                       # to understand later if the user explicitly set this
+                       # option or not
+                       # default
+                       help='optional path to a client JSON configuration '
+                       'file; if not specified, a default file is created '
+                       'automatically at {}; '
+                       'if a path is specified, the file must instead already '
+                       'exist, or an error will be raised; '
+                       'if this option is given an empty string, no file will '
+                       'be loaded'.format(base_conf['client_conf']))
 
 argparser.add_argument('--debug', action='store_true',
                        help='run the server in debug mode')

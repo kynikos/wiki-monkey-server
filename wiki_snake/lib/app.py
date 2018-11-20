@@ -17,8 +17,9 @@
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-import os
+import os.path
 import re
+import json
 from configfile import ConfigFile, NonExistentFileError
 from flask import Flask
 from flask_cors import CORS
@@ -51,6 +52,8 @@ def _pre_run(cors):
 def run(default_configfile, base_conf, cliargs):
     # Only main.py supports a configuration file, so don't put the following in
     # _pre_run()
+
+    default_clientconfigfile = base_conf['client_conf']
 
     try:
         # Note how the file is imported *before* importing any command-line
@@ -97,6 +100,17 @@ def run(default_configfile, base_conf, cliargs):
 
     if cliargs.db_path:
         conf.upgrade({'db_path': cliargs.db_path})
+
+    if cliargs.client_conf:
+        conf.upgrade({'client_conf': cliargs.client_conf})
+    elif (conf['client_conf'] == default_clientconfigfile and
+            not os.path.isfile(conf['client_conf'])):
+        # Only generate the client configuration if the default path was left,
+        # and the option --client-conf was not passed to the command line
+        with open(conf['client_conf'], 'w') as client_json:
+            # Note that the '#default' name is a convention also used in the
+            # client project (Wiki Monkey)
+            json.dump({'#default': {}}, client_json, indent=2)
 
     models, api, static = _pre_run(True)
 
