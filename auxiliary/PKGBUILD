@@ -1,0 +1,27 @@
+# Maintainer: Dario Giovannetti <dev at dariogiovannetti dot net>
+
+# Use wiki-monkey, not wiki-snake, since that's the application that users want
+# to use after all
+pkgname='wiki-monkey'
+pkgver='5.0.0'
+pkgrel=1
+pkgdesc="Wiki Monkey - MediaWiki (ArchWiki-optimized) bot and editor-assistant user script (server-enabled version)."
+arch=('any')
+url="https://github.com/kynikos/wiki-monkey/wiki"
+license=('GPL3')
+# Keep in sync with setup.py's install_requires option and requirements.txt
+depends=('python-configfile'
+         'python-xdg'
+         'python-flask-restinpeace' # implies 'python-flask-marshmallow' and 'python-apispec'
+         'python-flask-cors'
+         'python-flask-migrate' # implies 'python-flask-sqlalchemy'
+         'python-marshmallow-sqlalchemy')
+optdepends=('python-pyopenssl: use ad-hoc SSL certificates instead of generating one')
+makedepends=('python-setuptools')
+source=("https://files.pythonhosted.org/packages/source/${pkgname::1}/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('9368383fb1b47ac1b6514a761334b4f08f33e5e0d2a3510c50abb3297f01a84d')
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    python setup.py install --root="${pkgdir}" --optimize=1
+}

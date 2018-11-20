@@ -1,15 +1,19 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='wiki-snake',
-    version='0.1.0',
-    description="Wiki Monkey's database server.",
-    long_description="Wiki Monkey's database server.",
-    url='https://github.com/kynikos/wiki-snake',
+    # Use wiki-monkey, not wiki-snake, since that's the application that users
+    # want to use after all, and Wiki Monkey is bundled in the PyPI package
+    # anyway
+    name='wiki-monkey',
+    version='5.0.0',
+    description="Wiki Monkey - MediaWiki bot and editor-assistant user script.",
+    long_description="Wiki Monkey - MediaWiki (ArchWiki-optimized) bot and "
+        "editor-assistant user script (server-enabled version).",
+    url='https://github.com/kynikos/wiki-monkey',
     author='Dario Giovannetti',
     author_email='dev@dariogiovannetti.net',
     license='GPLv3+',
-    classifiers=(
+    classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Flask',
@@ -19,12 +23,12 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Topic :: Database :: Database Engines/Servers',
-    ),
+    ],
     python_requires='>=3',
     install_requires=(
         # Do not pin dependencies to specific versions in install_requires
         # https://packaging.python.org/discussions/install-requires-vs-requirements
-        # Keep in sync with requirements.txt
+        # Keep in sync with requirements.txt and PKGBUILD
         'apispec',
         'configfile',
         'Flask-Cors',
@@ -50,10 +54,14 @@ setup(
         ),
     },
     data_files=[
-        # Relative paths are put inside the installation folder
-        ('srv/static/', ('wiki-monkey/dist/*.js')),
-        # "-" has a special meaning in systemd unit names
+        ('/usr/share/wiki-monkey/', (
+            'wiki-monkey/dist/WikiMonkey-ArchWiki.js',
+            'wiki-monkey/dist/WikiMonkey-ArchWiki.min.js',
+            'wiki-monkey/dist/WikiMonkey-Wikipedia.js',
+            'wiki-monkey/dist/WikiMonkey-Wikipedia.min.js',
+        )),
         ('/usr/lib/systemd/user/', (
+            # "-" has a special meaning in systemd unit names
             'auxiliary/wiki_monkey.service',
             'auxiliary/wiki_monkey@.service',
         )),

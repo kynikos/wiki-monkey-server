@@ -1,4 +1,4 @@
-# Keep in sync with setup.py's install_requires option
+# Keep in sync with setup.py's install_requires option and PKGBUILD
 # https://packaging.python.org/discussions/install-requires-vs-requirements
 apispec==0.39.0
 configfile==1.2.2

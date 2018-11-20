@@ -21,7 +21,7 @@ from flask import Response, request, send_from_directory, jsonify
 
 from .app import conf, app
 
-USERSCRIPTDIR = '../../wiki-monkey/dist/'
+USERSCRIPTDIR = '/usr/share/wiki-monkey/'
 
 
 @app.route('/<path:filename>.js')
