@@ -16,8 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
 
-# from flask_rip import IMPLICIT, API, APISpec  # TODO
-from ..flask_rip import IMPLICIT, API, APISpec  # TODO
+from flask_rip import IMPLICIT, API, APISpec
 
 from ..app import VERSION, app
 
