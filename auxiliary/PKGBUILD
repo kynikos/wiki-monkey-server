@@ -19,7 +19,7 @@ depends=('python-configfile'
 optdepends=('python-pyopenssl: use ad-hoc SSL certificates instead of generating one')
 makedepends=('python-setuptools')
 source=("https://files.pythonhosted.org/packages/source/${pkgname::1}/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('9368383fb1b47ac1b6514a761334b4f08f33e5e0d2a3510c50abb3297f01a84d')
+sha256sums=('4a6af8f90c0b6127361121dbb421867d3b126c6d5f0b92c1dbacf89215ac8240')
 
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
