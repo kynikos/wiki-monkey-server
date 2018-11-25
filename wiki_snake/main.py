@@ -48,6 +48,7 @@ base_conf = ConfigFile(
             'ssl_key': '',
             'db_path': os.path.join(datadir, 'db.sqlite'),
             'client_conf': os.path.join(configdir, 'client.json'),
+            'user_script_dir': '/usr/share/wiki-monkey/'
             # No need to support 'debug' in the configuration file
         },
         {
@@ -131,6 +132,15 @@ argparser.add_argument('--db-path', metavar='PATH', action='store',
                        # default
                        help='the path to the SQLite database file '
                        '(default: {})'.format(base_conf['db_path']))
+
+argparser.add_argument('--user-script-dir', metavar='PATH', action='store',
+                       # Do not assign a default directly here, since I want
+                       # to understand later if the user explicitly set this
+                       # option or not
+                       # default
+                       help='the path to the directory containing the user '
+                       'scripts directory to serve '
+                       ' (default: {})'.format(base_conf['user_script_dir']))
 
 argparser.add_argument('--client-conf', metavar='PATH', action='store',
                        # Do not assign a default directly here, since I want

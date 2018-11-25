@@ -21,8 +21,6 @@ from flask import Response, request, send_from_directory, jsonify
 
 from .app import conf, app
 
-USERSCRIPTDIR = '/usr/share/wiki-monkey/'
-
 
 @app.route('/<path:filename>.js')
 def get_script(filename):
@@ -31,7 +29,8 @@ def get_script(filename):
     # If request.url_root this turns out to be unreliable, remember that
     # host name and port number are also defined in the configuration ('conf')
     url = request.url_root
-    script = send_from_directory(USERSCRIPTDIR, '.'.join((filename, 'js')))
+    script = send_from_directory(conf['user_script_dir'],
+                                 '.'.join((filename, 'js')))
 
     def generate():
         # TODO: *Appending* the variable to the response (instead of prepending

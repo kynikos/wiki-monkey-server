@@ -101,6 +101,9 @@ def run(default_configfile, base_conf, cliargs):
     if cliargs.db_path:
         conf.upgrade({'db_path': cliargs.db_path})
 
+    if cliargs.user_script_dir:
+        conf.upgrade({'user_script_dir': cliargs.user_script_dir})
+
     if cliargs.client_conf:
         conf.upgrade({'client_conf': cliargs.client_conf})
     elif (conf['client_conf'] == default_clientconfigfile and
