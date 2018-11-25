@@ -32,7 +32,7 @@ from configfile import ConfigFile
 # (trying 'python -m server.main' from the parent directory fails).
 # https://github.com/pallets/werkzeug/issues/461
 # https://chase-seibert.github.io/blog/2015/06/12/flask-werkzeug-reloader-python-dash-m.html
-from lib import app
+from .lib import app
 
 configdir = xdg.BaseDirectory.save_config_path('wiki-monkey')
 datadir = xdg.BaseDirectory.save_data_path('wiki-monkey')
@@ -158,5 +158,12 @@ argparser.add_argument('--client-conf', metavar='PATH', action='store',
 argparser.add_argument('--debug', action='store_true',
                        help='run the server in debug mode')
 
-if __name__ == "__main__":
+
+# setuptools' Automatic Script Creation requires a main function
+# https://setuptools.readthedocs.io/en/latest/setuptools.html#automatic-script-creation
+def main():
     app.run(default_configfile, base_conf, argparser.parse_args())
+
+
+if __name__ == "__main__":
+    main()

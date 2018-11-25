@@ -49,8 +49,8 @@ setup(
             # Use wiki-monkey, not wiki-snake, since that's the application
             # that users want to use after all
             # TODO: Maybe just rename the whole project as wiki-monkey-server
-            'wiki-monkey = wiki_snake.main',
-            'wiki-monkey-gencert = wiki_snake.gencert',
+            'wiki-monkey = wiki_snake.main:main',
+            'wiki-monkey-gencert = wiki_snake.gencert:main',
         ),
     },
     data_files=[

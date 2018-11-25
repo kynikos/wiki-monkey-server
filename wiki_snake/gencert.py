@@ -49,7 +49,10 @@ argparser.add_argument('--path', metavar='PATH', action='store',
                        'certificate files will be saved '
                        '(default: %(default)s)')
 
-if __name__ == "__main__":
+
+# setuptools' Automatic Script Creation requires a main function
+# https://setuptools.readthedocs.io/en/latest/setuptools.html#automatic-script-creation
+def main():
     cliargs = argparser.parse_args()
 
     for args in (
@@ -76,3 +79,7 @@ this can be done for example by visiting the user-script's location and
 following the browser's prompts to store the certificate.
 """.format(
     os.path.join(cliargs.path, KEY), os.path.join(cliargs.path, CERT)))
+
+
+if __name__ == "__main__":
+    main()
