@@ -22,17 +22,25 @@ import xdg.BaseDirectory
 from configfile import ConfigFile
 
 # NOTE: WHY NOT MOVE 'api' AND 'models' NEXT TO THIS SCRIPT?
+#       ALSO WHY THIS IS THE ONLY WAY TO USE A RELATIVE IMPORT HERE?
 # Due to werkzeug issue #461 this is the only configuration to get this
 # app running with Flask in debug=True mode (in debug=False mode everything
 # would work normally); the problem is that in debug mode the reloader is
 # activated, and it messes the PYTHONPATH at every app reload, thus failing
 # the relative module imports. It is necessary to keep the subpackages inside a
-# common'lib' subpackage (they can't stay as siblings of this script); this
+# common 'lib' subpackage (they can't stay as siblings of this script); this
 # script has to be called with 'python -m main' from within its directory
-# (trying 'python -m server.main' from the parent directory fails).
+# (trying 'python -m wiki_snake.main' from the parent directory fails).
 # https://github.com/pallets/werkzeug/issues/461
 # https://chase-seibert.github.io/blog/2015/06/12/flask-werkzeug-reloader-python-dash-m.html
-from .lib import app
+# This workaround is inspired by https://stackoverflow.com/a/49480246/645498
+if __package__:
+    # This is used when debug=False, or when debug=True but only the first time
+    # that the app is loaded
+    from .lib import app
+else:
+    # This is used when debug=True the second time that is loaded
+    from lib import app
 
 configdir = xdg.BaseDirectory.save_config_path('wiki-monkey')
 datadir = xdg.BaseDirectory.save_data_path('wiki-monkey')
