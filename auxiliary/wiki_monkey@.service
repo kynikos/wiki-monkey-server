@@ -1,5 +1,5 @@
 [Unit]
-Description=Wiki Monkey's database server
+Description=Wiki Monkey's database server (%i preset)
 
 [Service]
 ExecStart=/usr/bin/wiki-monkey --preset %i
