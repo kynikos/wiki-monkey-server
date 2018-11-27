@@ -29,7 +29,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 database = SQLAlchemy(app)
-migrate = Migrate(app, database)
+migrate = Migrate(app, database, directory=os.path.join(
+    os.path.dirname(__file__), '../../migrations'))
 
 # TODO: Import/export tables from/to CSV/JSON
 

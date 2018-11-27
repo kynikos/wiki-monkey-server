@@ -53,6 +53,9 @@ setup(
             'wiki-monkey-gencert = wiki_snake.gencert:main',
         ),
     },
+    package_data={
+        'wiki_snake': ['migrations/*', 'migrations/**/*'],
+    },
     data_files=[
         ('/usr/share/wiki-monkey/', (
             'wiki-monkey/dist/WikiMonkey-ArchWiki.js',
