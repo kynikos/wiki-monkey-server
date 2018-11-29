@@ -26,10 +26,6 @@ KEY = 'wiki-monkey-key.pem'
 CSR = 'wiki-monkey.csr'
 CERT = 'wiki-monkey-cert.pem'
 
-# TODO: Remind in documentation that the ssl_key and ssl_cert options must be
-#       updated in the configuration file, and the certificate must be stored
-#       in the browser
-
 argparser = argparse.ArgumentParser(
     description="Wiki Monkey database server - Generate SSL certificate",
     epilog="""After generating the key and the certificate, their paths must be
