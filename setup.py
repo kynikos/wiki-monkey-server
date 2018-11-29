@@ -1,9 +1,6 @@
 from setuptools import setup, find_packages
 
 setup(
-    # Use wiki-monkey, not wiki-snake, since that's the application that users
-    # want to use after all, and Wiki Monkey is bundled in the PyPI package
-    # anyway
     name='wiki-monkey',
     version='5.0.0',
     description="Wiki Monkey - MediaWiki bot and editor-assistant user script.",
@@ -46,15 +43,12 @@ setup(
     packages=find_packages(exclude=('contrib', 'docs', 'tests')),
     entry_points={
         'console_scripts': (
-            # Use wiki-monkey, not wiki-snake, since that's the application
-            # that users want to use after all
-            # TODO: Maybe just rename the whole project as wiki-monkey-server
-            'wiki-monkey = wiki_snake.main:main',
-            'wiki-monkey-gencert = wiki_snake.gencert:main',
+            'wiki-monkey = wiki_monkey.main:main',
+            'wiki-monkey-gencert = wiki_monkey.gencert:main',
         ),
     },
     package_data={
-        'wiki_snake': ['migrations/*', 'migrations/**/*'],
+        'wiki_monkey': ['migrations/*', 'migrations/**/*'],
     },
     data_files=[
         ('/usr/share/wiki-monkey/', (

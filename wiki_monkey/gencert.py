@@ -1,20 +1,20 @@
-# Wiki Snake - Wiki Monkey's database server
+# Wiki Monkey's database server
 # Copyright (C) 2018 Dario Giovannetti <dev@dariogiovannetti.net>
 #
-# This file is part of Wiki Snake.
+# This file is part of Wiki Monkey's database server.
 #
-# Wiki Snake is free software: you can redistribute it and/or modify
+# Wiki Monkey is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# Wiki Snake is distributed in the hope that it will be useful,
+# Wiki Monkey is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Wiki Snake.  If not, see <http://www.gnu.org/licenses/>.
+# along with Wiki Monkey.  If not, see <http://www.gnu.org/licenses/>.
 
 import os.path
 import subprocess
@@ -31,7 +31,7 @@ CERT = 'wiki-monkey-cert.pem'
 #       in the browser
 
 argparser = argparse.ArgumentParser(
-    description="wiki-snake - Wiki Monkey database server - Generate SSL certificate",
+    description="Wiki Monkey database server - Generate SSL certificate",
     epilog="""After generating the key and the certificate, their paths must be
 either passed to the command line when launching the server
 (see wiki-monkey --help), or more conveniently added to the server's
