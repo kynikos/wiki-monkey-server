@@ -105,8 +105,8 @@ argparser.add_argument('--host', metavar='HOST', action='store',
                        # to understand later if the user explicitly set this
                        # option or not
                        # default
-                       help='the hostname to listen on '
-                       '(default: {})'.format(base_conf['host']))
+                       help="the server machine's hostname "
+                       "(default: {})".format(base_conf['host']))
 
 argparser.add_argument('-p', '--port', metavar='NUMBER', action='store',
                        # Do not assign a default directly here, since I want
