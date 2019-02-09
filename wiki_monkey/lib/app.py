@@ -90,7 +90,7 @@ def run(default_configfile, base_conf, cliargs):
     if cliargs.origins:
         # BUG: Requiring to separate the origins with spaces isn't the safest
         #      way to handle lists of values...
-        conf.upgrade({'origins': cliargs.origins.join(' ')})
+        conf.upgrade({'origins': ' '.join(cliargs.origins)})
 
     if cliargs.ssl_cert:
         conf.upgrade({'ssl_cert': cliargs.ssl_cert})
