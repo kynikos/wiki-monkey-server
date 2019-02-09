@@ -27,6 +27,7 @@ setup(
         # https://packaging.python.org/discussions/install-requires-vs-requirements
         # Keep in sync with requirements.txt and PKGBUILD
         'apispec',
+        'apispec-webframeworks',
         'configfile',
         'Flask-Cors',
         'flask-marshmallow',
