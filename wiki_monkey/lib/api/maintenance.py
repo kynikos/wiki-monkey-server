@@ -41,8 +41,8 @@ def get_database_revision():
     # flask_migrate.current() prints to some kind of stream that I haven't
     # found a way to capture (no, not sys.stdout nor sys.stderr)
     return db.session.execute(
-        sa.select(('version_num', )).\
-        select_from('alembic_version')).\
+        sa.select((sa.column('version_num'), )).\
+        select_from(sa.text('alembic_version'))).\
         scalar()
 
 
