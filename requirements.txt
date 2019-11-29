@@ -1,14 +1,14 @@
 # Keep in sync with setup.py's install_requires option and PKGBUILD
 # https://packaging.python.org/discussions/install-requires-vs-requirements
-apispec==2.0.2
-apispec-webframeworks==0.4.0
+apispec==3.1.0
+apispec-webframeworks==0.5.2
 configfile==1.2.4
 Flask-Cors==3.0.8
 flask-marshmallow==0.10.1
 Flask-Migrate==2.5.2
-flask-restinpeace==1.3.0
-Flask-SQLAlchemy==2.4.0
-marshmallow-sqlalchemy==0.17.0
+flask-restinpeace==1.4.0
+Flask-SQLAlchemy==2.4.1
+marshmallow-sqlalchemy==0.19.0
 # pyOpenSSL is required only if using an ad-hoc certificate
-pyOpenSSL==19.0.0
+pyOpenSSL==19.1.0
 pyxdg==0.26
