@@ -8,7 +8,7 @@ flask-marshmallow==0.10.1
 Flask-Migrate==2.5.2
 flask-restinpeace==1.4.0
 Flask-SQLAlchemy==2.4.1
-marshmallow-sqlalchemy==0.19.0
+marshmallow-sqlalchemy==0.21.0
 # pyOpenSSL is required only if using an ad-hoc certificate
 pyOpenSSL==19.1.0
 pyxdg==0.26
