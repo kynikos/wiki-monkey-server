@@ -26,7 +26,7 @@ ma = api.ma
 
 
 class CanonicalSpecialPageName(ma.String):
-    def _deserialize(self, value, attr, data):
+    def _deserialize(self, value, attr, data, **kwargs):
         # 'wgCanonicalSpecialPageName' can be False
         return None if value is False else value
 
