@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='wiki-monkey',
-    version='5.1.3',
+    version='5.2.0',
     description="Wiki Monkey - MediaWiki bot and editor-assistant user script.",
     long_description="Wiki Monkey - MediaWiki (ArchWiki-optimized) bot and "
         "editor-assistant user script (server-enabled version).",
