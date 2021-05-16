@@ -24,7 +24,7 @@ from configfile import ConfigFile, NonExistentFileError
 from flask import Flask
 from flask_cors import CORS
 
-VERSION = '5.3.2'  # TODO Extract the version from setup.py or something
+VERSION = '5.3.3'  # TODO Extract the version from setup.py or something
 
 # 'conf' and 'app' are assigned in run() as global variables to ease
 # importing them from the subpackages without e.g. requiring to pass them as
