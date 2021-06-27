@@ -54,6 +54,8 @@ base_conf = ConfigFile(
             'origins': '',
             'ssl_cert': '',
             'ssl_key': '',
+            'workers': '1',
+            'force_development_server': 'false',
             'db_path': os.path.join(datadir, 'db.sqlite'),
             'client_conf': os.path.join(configdir, 'client.json'),
             'user_script_dir': '/usr/share/wiki-monkey/'
@@ -126,12 +128,32 @@ argparser.add_argument('--origin', metavar='HOST', action='append',
 argparser.add_argument('--ssl-cert', metavar='PATH', action='store',
                        help='optional path to an SSL certificate file; '
                        'if not provided, an ad-hoc certificate will be '
-                       'created (requires the pyOpenSSL library)')
+                       'created by the development Flask server (requires the '
+                       'pyOpenSSL library)')
 
 argparser.add_argument('--ssl-key', metavar='PATH', action='store',
                        help='optional path to an SSL key file; '
                        'if not provided, an ad-hoc certificate will be '
-                       'created (requires the pyOpenSSL library)')
+                       'created by the development Flask server (requires the '
+                       'pyOpenSSL library)')
+
+argparser.add_argument('--workers', metavar='NUMBER', action='store',
+                       # Do not assign a default directly here, since I want
+                       # to understand later if the user explicitly set this
+                       # option or not
+                       # default
+                       type=int,
+                       help='the number of Gunicorn server worker processes '
+                       '(default: {}); this option is ignored if using the '
+                       'Flask development server'.format(base_conf['workers']))
+
+argparser.add_argument('--force-development-server', action='store_true',
+                       # Do not assign a default directly here, since I want
+                       # to understand later if the user explicitly set this
+                       # option or not
+                       # default
+                       help='force the Flask development server even if '
+                       'Gunicorn is installed')
 
 argparser.add_argument('--db-path', metavar='PATH', action='store',
                        # Do not assign a default directly here, since I want

@@ -34,6 +34,9 @@ setup(
         'Flask-Migrate',
         'flask-restinpeace',
         'Flask-SQLAlchemy',
+        # gunicorn is required only if using the wrapping WSGI server, recommended in
+        # production applications https://flask.palletsprojects.com/en/2.0.x/api/#flask.Flask.run
+        'gunicorn',
         'marshmallow-sqlalchemy',
         # pyOpenSSL is required only if using an ad-hoc certificate
         # Optional dependencies shouldn't be added to install_requires

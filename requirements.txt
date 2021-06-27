@@ -8,6 +8,9 @@ flask-marshmallow==0.13.0
 Flask-Migrate==2.5.3
 flask-restinpeace==1.4.0
 Flask-SQLAlchemy==2.4.4
+# gunicorn is required only if using the wrapping WSGI server, recommended in
+# production applications https://flask.palletsprojects.com/en/2.0.x/api/#flask.Flask.run
+gunicorn==20.1.0
 marshmallow-sqlalchemy==0.23.1
 # pyOpenSSL is required only if using an ad-hoc certificate
 pyOpenSSL==19.1.0

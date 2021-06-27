@@ -23,6 +23,12 @@ import json
 from configfile import ConfigFile, NonExistentFileError
 from flask import Flask
 from flask_cors import CORS
+try:
+    # Running a proper WSGI server is recommended in production environments
+    # https://flask.palletsprojects.com/en/2.0.x/api/#flask.Flask.run
+    from gunicorn.app.base import BaseApplication as GunicornApplication
+except ImportError:
+    GunicornApplication = None
 
 VERSION = '5.4.0'  # TODO Extract the version from setup.py or something
 
@@ -98,6 +104,13 @@ def run(default_configfile, base_conf, cliargs):
     if cliargs.ssl_key:
         conf.upgrade({'ssl_key': cliargs.ssl_key})
 
+    if cliargs.workers:
+        conf.upgrade({'workers': str(cliargs.workers)})
+
+    if cliargs.force_development_server:
+        conf.upgrade({
+            'force_development_server': str(cliargs.force_development_server)})
+
     if cliargs.db_path:
         conf.upgrade({'db_path': cliargs.db_path})
 
@@ -119,6 +132,40 @@ def run(default_configfile, base_conf, cliargs):
 
     models.init_database()
 
+    if not conf.get_bool('force_development_server') and GunicornApplication:
+        run_gunicorn(cliargs)
+    else:
+        run_flask(cliargs)
+
+
+def run_gunicorn(cliargs):
+    # Running a proper WSGI server is recommended in production environments
+    # https://flask.palletsprojects.com/en/2.0.x/api/#flask.Flask.run
+    class Application(GunicornApplication):
+        def __init__(self, app, options=None):
+            self.options = options or {}
+            self.application = app
+            super().__init__()
+
+        def load_config(self):
+            config = {key: value for key, value in self.options.items()
+                    if key in self.cfg.settings and value is not None}
+            for key, value in config.items():
+                self.cfg.set(key.lower(), value)
+
+        def load(self):
+            return self.application
+
+    Application(app, dict(
+        bind='{}:{}'.format(conf['host'], conf.get_int('port')),
+        workers=conf.get_int('workers'),
+        keyfile=conf['ssl_key'] or None,
+        certfile=conf['ssl_cert'] or None,
+        loglevel='debug' if cliargs.debug else 'info',
+    )).run()
+
+
+def run_flask(cliargs):
     app.run(host=conf['host'],
             port=conf.get_int('port'),
             ssl_context=(conf['ssl_cert'], conf['ssl_key'])
