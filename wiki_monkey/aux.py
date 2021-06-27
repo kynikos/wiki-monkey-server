@@ -18,7 +18,7 @@
 
 import argparse
 
-from lib import app
+from .lib import app
 
 argparser = argparse.ArgumentParser(
     description="Wiki Monkey database server - Development operations",

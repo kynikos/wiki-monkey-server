@@ -133,18 +133,18 @@ def maintain(cliargs):
     global conf
     conf = ConfigFile({
         'db_path': cliargs.db_path,
-        'init_env': cliargs.init_env,
-        'revise': cliargs.revise,
-        'migrate': cliargs.migrate,
+        'init_env': str(cliargs.init_env),
+        'revise': str(cliargs.revise),
+        'migrate': str(cliargs.migrate),
     })
 
     models, api, static = _pre_run(False)
 
-    if conf['init_env']:
+    if conf.get_bool('init_env'):
         models.init_migrations()
-    elif conf['revise']:
+    elif conf.get_bool('revise'):
         models.create_revision()
-    elif conf['migrate']:
+    elif conf.get_bool('migrate'):
         models.create_migration()
     else:
         raise ValueError("Unspecified maintenance command")
