@@ -51,6 +51,7 @@ base_conf = ConfigFile(
         {
             'host': 'localhost',
             'port': '13502',
+            'proxy_url': '',
             'origins': '',
             'ssl_cert': '',
             'ssl_key': '',
@@ -118,6 +119,15 @@ argparser.add_argument('-p', '--port', metavar='NUMBER', action='store',
                        type=int,
                        help='the port number to listen on '
                        '(default: {})'.format(base_conf['port']))
+
+argparser.add_argument('--proxy-url', metavar='URL', action='store',
+                       # Do not assign a default directly here, since I want
+                       # to understand later if the user explicitly set this
+                       # option or not
+                       # default
+                       help='the optional url at which clients shall be '
+                       'instructed to contact the server, instead of '
+                       'defaulting to host:port')
 
 argparser.add_argument('--origin', metavar='HOST', action='append',
                        dest='origins',

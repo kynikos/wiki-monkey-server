@@ -28,7 +28,7 @@ def get_script(filename):
     # available there, and I should use app.test_request_context()
     # If request.url_root this turns out to be unreliable, remember that
     # host name and port number are also defined in the configuration ('conf')
-    url = request.url_root
+    url = conf['proxy_url'] or request.url_root
     script = send_from_directory(conf['user_script_dir'],
                                  '.'.join((filename, 'js')))
 

@@ -93,6 +93,9 @@ def run(default_configfile, base_conf, cliargs):
     if cliargs.port:
         conf.upgrade({'port': str(cliargs.port)})
 
+    if cliargs.proxy_url:
+        conf.upgrade({'proxy_url': cliargs.proxy_url})
+
     if cliargs.origins:
         # BUG: Requiring to separate the origins with spaces isn't the safest
         #      way to handle lists of values...
