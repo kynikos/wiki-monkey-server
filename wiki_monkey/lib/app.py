@@ -30,7 +30,7 @@ try:
 except ImportError:
     GunicornApplication = None
 
-VERSION = '5.5.0'  # TODO Extract the version from setup.py or something
+VERSION = '5.5.1'  # TODO Extract the version from setup.py or something
 
 # 'conf' and 'app' are assigned in run() as global variables to ease
 # importing them from the subpackages without e.g. requiring to pass them as
